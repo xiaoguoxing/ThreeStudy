@@ -20,5 +20,8 @@
   "homepage": "https://github.com/xiaoguoxing/ThreeStudy#readme",
   "dependencies": {
     "three": "^0.150.1"
+  },
+  "devDependencies": {
+    "vite": "^4.2.1"
   }
 }

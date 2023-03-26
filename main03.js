@@ -22,14 +22,8 @@ scene.add(camera)
 //添加物体
 
 const box = new Three.BoxGeometry()
-const boxMaterIal = new Three.MeshBasicMaterial({color:'#fff'})
+const boxMaterIal = new Three.MeshBasicMaterial({color:0xffff00})
 const  a = new Three.Mesh(box,boxMaterIal)
-
-// a.scale.set(3,2,1)
-// a.scale.x = 5
-
-// a.rotation.set(Math.PI/4,0,0,'XZY')
-
 scene.add(a)
 
 //初始化渲染器
@@ -43,27 +37,9 @@ document.body.appendChild(render.domElement);
 
 const Controls = new OrbitControls(camera,render.domElement)
 
-const clock = new Three.Clock()
+// Controls.update()
 
-function R1(time){
-    // console.log(time);
-    // a.position.x += 0.01
-    // a.rotation.y += 0.01
-
-    let t = clock.getElapsedTime()
-
-    let deltaTime = clock.getDelta()
-
-    // console.log('总时长',t);
-    // console.log('间隔时间',deltaTime);
-
-
-
-    a.position.x = t % 5
-
-    // a.rotation.y += t
-
-
+function R1(){
     render.render(scene,camera)
     requestAnimationFrame(R1)
 }
