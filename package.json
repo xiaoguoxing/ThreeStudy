@@ -1,0 +1,24 @@
+{
+  "name": "threestudy",
+  "version": "1.0.0",
+  "description": "threeJS学习",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiaoguoxing/ThreeStudy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xiaoguoxing/ThreeStudy/issues"
+  },
+  "homepage": "https://github.com/xiaoguoxing/ThreeStudy#readme",
+  "dependencies": {
+    "three": "^0.150.1"
+  }
+}
