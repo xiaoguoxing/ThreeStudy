@@ -3,8 +3,6 @@ import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import WebGL from 'three/examples/jsm/capabilities/WebGL'
 import {gsap} from "gsap";
-const clock = new THREE.Clock()
-
 // 场景
 const scene = new THREE.Scene()
 
@@ -30,9 +28,6 @@ render.setSize(window.innerWidth, window.innerHeight)
 
 document.body.appendChild(render.domElement);
 
-const Controls = new OrbitControls(camera, render.domElement)
-
-Controls.enableDamping = true
 //添加物体
 
 const box = new THREE.BoxGeometry()
@@ -61,6 +56,9 @@ const line = new THREE.Line(geometry, lineMaterial);
 scene.add(line)
 
 
+const Controls = new OrbitControls(camera, render.domElement)
+
+const clock = new THREE.Clock()
 
 
 let an = gsap.to(a.position, {
@@ -74,7 +72,7 @@ let an = gsap.to(a.position, {
     yoyo:true,
     repeat:-1
 })
-gsap.to(a.rotation, {
+ gsap.to(a.rotation, {
     x: 2 * Math.PI, duration: 5, ease: 'power1.inOut',
     onStart() {
         console.log('开始了2')
@@ -82,10 +80,9 @@ gsap.to(a.rotation, {
     onComplete() {
         console.log('完成了2')
     },
-    repeat:-1,
-
+    repeat:2
 })
-window.addEventListener('click',()=>{
+window.addEventListener('dblclick',()=>{
     if(an.isActive()){
         an.pause()
     }else {
@@ -93,38 +90,7 @@ window.addEventListener('click',()=>{
     }
 })
 
-window.addEventListener('keydown',(e)=>{
-    console.log(e.code);
-    const element = e
-    if(e.code==='KeyS'){
-        if(!window.fullscreenElement){
-            render.domElement.requestFullscreen()
-        }else {
-            if(document.exitFullScreen) {
-                document.exitFullScreen();
-            } else if(document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if(document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if(element.msExitFullscreen) {
-                element.msExitFullscreen();
-            }
-        }
-    }
-})
-
-window.addEventListener('resize',()=>{
-    camera.aspect = window.innerWidth / window.innerHeight
-
-    camera.updateProjectionMatrix()
-
-    render.setSize( window.innerWidth, window.innerHeight)
-
-    render.setPixelRatio(window.devicePixelRatio)
-})
-
 function R1(time) {
-    Controls.update()
     render.render(scene, camera)
     requestAnimationFrame(R1)
 }

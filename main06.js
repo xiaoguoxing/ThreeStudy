@@ -82,34 +82,13 @@ gsap.to(a.rotation, {
     onComplete() {
         console.log('完成了2')
     },
-    repeat:-1,
-
+    repeat:2
 })
-window.addEventListener('click',()=>{
+window.addEventListener('dblclick',()=>{
     if(an.isActive()){
         an.pause()
     }else {
         an.resume()
-    }
-})
-
-window.addEventListener('keydown',(e)=>{
-    console.log(e.code);
-    const element = e
-    if(e.code==='KeyS'){
-        if(!window.fullscreenElement){
-            render.domElement.requestFullscreen()
-        }else {
-            if(document.exitFullScreen) {
-                document.exitFullScreen();
-            } else if(document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if(document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if(element.msExitFullscreen) {
-                element.msExitFullscreen();
-            }
-        }
     }
 })
 
