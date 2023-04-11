@@ -3,8 +3,6 @@ import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import WebGL from 'three/examples/jsm/capabilities/WebGL'
 import {gsap} from "gsap";
-import * as dat from "dat.gui";
-
 const clock = new THREE.Clock()
 
 // 场景
@@ -63,6 +61,8 @@ const line = new THREE.Line(geometry, lineMaterial);
 scene.add(line)
 
 
+
+
 let an = gsap.to(a.position, {
     x: 10, duration: 3, ease: 'power1.inOut',
     onStart() {
@@ -71,42 +71,54 @@ let an = gsap.to(a.position, {
     onComplete() {
         console.log('完成了1')
     },
-    yoyo: true,
-    repeat: -1
+    yoyo:true,
+    repeat:-1
 })
-window.addEventListener('dblclick', () => {
-    if (an.isActive()) {
+gsap.to(a.rotation, {
+    x: 2 * Math.PI, duration: 5, ease: 'power1.inOut',
+    onStart() {
+        console.log('开始了2')
+    },
+    onComplete() {
+        console.log('完成了2')
+    },
+    repeat:-1,
+
+})
+window.addEventListener('click',()=>{
+    if(an.isActive()){
         an.pause()
-    } else {
+    }else {
         an.resume()
     }
 })
 
-window.addEventListener('keydown', (e) => {
+window.addEventListener('keydown',(e)=>{
+    console.log(e.code);
     const element = e
-    if (e.code === 'KeyS') {
-        if (!window.fullscreenElement) {
+    if(e.code==='KeyS'){
+        if(!window.fullscreenElement){
             render.domElement.requestFullscreen()
-        } else {
-            if (document.exitFullScreen) {
+        }else {
+            if(document.exitFullScreen) {
                 document.exitFullScreen();
-            } else if (document.mozCancelFullScreen) {
+            } else if(document.mozCancelFullScreen) {
                 document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
+            } else if(document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
-            } else if (element.msExitFullscreen) {
+            } else if(element.msExitFullscreen) {
                 element.msExitFullscreen();
             }
         }
     }
 })
 
-window.addEventListener('resize', () => {
+window.addEventListener('resize',()=>{
     camera.aspect = window.innerWidth / window.innerHeight
 
     camera.updateProjectionMatrix()
 
-    render.setSize(window.innerWidth, window.innerHeight)
+    render.setSize( window.innerWidth, window.innerHeight)
 
     render.setPixelRatio(window.devicePixelRatio)
 })
@@ -125,41 +137,15 @@ if (WebGL.isWebGLAvailable()) {
     document.getElementById('container').appendChild(warning);
 }
 
-const gui = new dat.GUI()
 
-const params = {
-    color:'#f60',
-    fn(){
-        gsap.to(a.rotation, {
-            x: 2 * Math.PI, duration: 5, ease: 'power1.inOut',
-            onStart() {
-                console.log('开始了2')
-            },
-            onComplete() {
-                console.log('完成了2')
-            },
-            repeat: -1,
 
-        })
-    }
-}
 
-let folder = gui.addFolder('设置立方体')
-folder.add(a.position,'y').min(0).max(5).step(0.01).name('box').onChange(value=>{
-    console.log('值被修改了',value);
-}).onFinishChange(value=>{
-    console.log('完全停下来',value)
-})
 
-folder.add(a.material,'wireframe')
 
-folder.addColor(params,'color').onChange(value=>{
-    a.material.color.set(value)
-})
 
-folder.add(a,'visible').name('是否显示')
 
-folder.add(params,'fn').name('点击运动')
+
+
 
 
 
