@@ -5,8 +5,6 @@ import WebGL from 'three/examples/jsm/capabilities/WebGL'
 import {gsap} from "gsap";
 import * as dat from "dat.gui";
 
-import blueImg from './assets/images/blue.jpg'
-
 const clock = new THREE.Clock()
 
 // 场景
@@ -43,29 +41,31 @@ Controls.enableDamping = true
 
 
 
-//纹理
-const abc = new THREE.TextureLoader()
-const blueI = abc.load(blueImg)
-// blueI.offset.set(0.5,0.5)
-blueI.center.set(0.5, 0.5)
-blueI.rotation = 0
-blueI.repeat.set(2,3)
 
-blueI.wrapS =THREE.MirroredRepeatWrapping
 
-blueI.wrapT =THREE.RepeatWrapping
+
+
 // 添加物体
-const box = new THREE.BoxBufferGeometry(5,5,5)
 
-let color = new THREE.Color(Math.random(),Math.random(),Math.random())
+for (let i = 0; i < 50; i++) {
+    const box = new THREE.BufferGeometry()
+    let abc = new Float32Array(9)
 
-const boxMaterIal = new THREE.MeshBasicMaterial({
-    map:blueI,
-})
+    for (let j=0; j<9;j++){
+        abc[j] = Math.random() * 10 - 5
+    }
 
-const a = new THREE.Mesh(box, boxMaterIal)
+    box.setAttribute('position',new THREE.BufferAttribute(abc,3))
 
-scene.add(a)
+    let color = new THREE.Color(Math.random(),Math.random(),Math.random())
+
+    const boxMaterIal = new THREE.MeshBasicMaterial({color: color,transparent:true,opacity:0.5})
+
+    const a = new THREE.Mesh(box, boxMaterIal)
+
+    scene.add(a)
+}
+
 
 
 const lineMaterial = new THREE.LineBasicMaterial({color: 0x0000ff});
