@@ -1,6 +1,6 @@
 <template>
   <h1 style="position: relative; color: #fff; font-size: 25px">{{ cubeName }}</h1>
-  <div class="container" ref="container"></div>
+  <div class="container" ref="containerRef"></div>
 </template>
 
 <script setup>
@@ -12,18 +12,20 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
 import * as dat from 'dat.gui'
 import { ref, reactive, onMounted } from "vue";
+let containerRef = ref(null)
 // 三个必备的参数
 let scene, camera, renderer, controls, mesh, material, group, texture, model;
 let cubeName = ref('')
 let modelCopy = ref(null)
 onMounted(() => {
   const clock = new THREE.Clock()
+
   const gui =new dat.GUI()
+  const  container = containerRef.value
   // 外层需要获取到dom元素以及浏览器宽高，来对画布设置长宽
   // clientWidth等同于container.value.clientWidth
-  let container = document.querySelector(".container");
   const { clientWidth, clientHeight } = container;
-  console.log(clientHeight);
+  // console.log(clientHeight);
 
   // 首先需要获取场景，这里公共方法放在init函数中
   const init = () => {
@@ -39,14 +41,11 @@ onMounted(() => {
       999999
     );
     // 相机坐标
-    camera.position.set(
-162.18946474860078,
-3.8090976407008625,
-164.32048609591254);
+    camera.position.set(233.74255408437466, 12.416916744908681, 179.7304219401932);
     // 相机观察目标
     // let rotation = new THREE.Vector3(179.080399093471, 0.41626736228011474, 147.38133406932474);
     camera.lookAt(scene.position);
-    console.log('camera:position', camera)
+    // console.log('camera:position', camera)
     // 渲染器
     renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -54,11 +53,11 @@ onMounted(() => {
     // 渲染多大的地方
     renderer.setSize(clientWidth, clientHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
-    const axesHelper = new THREE.AxesHelper(10);
-    scene.add(axesHelper);
+    const axesHelper = new THREE.AxesHelper(100);
+    // scene.add(axesHelper);
     container.appendChild(renderer.domElement);
     addBox();
-    console.log("查看当前屏幕设备像素比", window.devicePixelRatio);
+    // console.log("查看当前屏幕设备像素比", window.devicePixelRatio);
   };
   init();
   function onModelPositionChange() {
@@ -74,9 +73,9 @@ onMounted(() => {
     dracoLoader.setDecoderConfig({ type: 'js' });
     dracoLoader.preload();
     loader.setDRACOLoader(dracoLoader)
-    loader.load('/public/models/deviceRoom.glb',
+    loader.load('/public/models/waterDrivation.glb',
       function (gltf) {
-        console.log(gltf.scene, 'sceneeeeee.');
+        // console.log(gltf.scene, 'sceneeeeee.');
         // gltf.scene.name = "正方体";
         model = gltf.scene
         modelCopy.value = gltf.scene
@@ -90,7 +89,7 @@ onMounted(() => {
         // // console.log(nameNode);
         // // nameNode.material.color.set(0xfff000)
         gltf.scene.traverse(function (child) {
-          console.log(child, 'child..............')
+          // console.log(child, 'child..............')
 
           // 导入纹理图
           // const textureLoader = new THREE.TextureLoader();
@@ -129,7 +128,6 @@ onMounted(() => {
   function onMouseClick(event) {
     let mouse = new THREE.Vector2()
     let raycaster = new THREE.Raycaster()
-    let container = document.querySelector('.container')
     const getBoundingClientRect = container.getBoundingClientRect()
     mouse.x = ((event.clientX - getBoundingClientRect.left) / container.offsetWidth) * 2 - 1
     mouse.y = ((event.clientY - getBoundingClientRect.top) / container.offsetHeight) * -2 + 1
@@ -174,7 +172,7 @@ onMounted(() => {
     // controls.lookAt(157.0442051390957,
     //     6.624988346225976,
     //     165.19581300175204)
-    controls.movementSpeed = 100;
+    controls.movementSpeed = 50;
     // controls.rollSpeed = Math.PI / 60;
     controls.lookSpeed = 0.05;
     controls.verticalMax = Math.PI / 2;
@@ -188,6 +186,7 @@ onMounted(() => {
     //
     // });
   };
+  // FirstPerson()
   const control = () => {
     // console.log(modelCopy.value, 'modelCopy')
     controls = new OrbitControls(camera, renderer.domElement);
@@ -195,15 +194,19 @@ onMounted(() => {
     // controls.lookAt = new THREE.Vector3(157.0442051390957,
     //   6.624988346225976,
     //   165.19581300175204)
+
     controls.update();
+    // controls.autoRotate  = true;
+    controls.panSpeed = .5;
+    controls.rotateSpeed  = .5;
     controls.minPolarAngle = 0
     controls.maxPolarAngle = Math.PI / 2
     controls.addEventListener("change", () => {
 
       // 浏览器控制台查看controls.target变化，辅助设置lookAt参数
-      console.log("controls.target", controls.target);
-      // 浏览器控制台查看相机位置变化
-      console.log("camera.position", camera.position);
+      // console.log("controls.target", controls.target);
+      // // 浏览器控制台查看相机位置变化
+      // console.log("camera.position", camera.position);
 
     });
   };
@@ -224,12 +227,12 @@ onMounted(() => {
     requestAnimationFrame(render);
   };
   render();
-  renderer.domElement.addEventListener("resize", () => {
+  window.addEventListener("resize", () => {
     // 更新摄像头
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    console.log(model.position, 'position')
+    // console.log(model.position, 'position')
   });
   renderer.domElement.addEventListener('click', onMouseClick, false);
 });
