@@ -1,5 +1,8 @@
-import {Scene, PerspectiveCamera, WebGLRenderer, SRGBColorSpace, AmbientLight, AxesHelper, Color} from 'three'
+import {Scene, PerspectiveCamera, WebGLRenderer, SRGBColorSpace, AmbientLight, AxesHelper,Raycaster, Color,Vector2} from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import Stats from 'three/examples/jsm/libs/stats.module';
+import Events,{EventBus} from "@/modules/Viewer/Events";
+import SkyBoxs from "@/modules/SkyBoxs";
 import * as THREE from 'three'
 
 export default class Viewer {
@@ -9,10 +12,15 @@ export default class Viewer {
     renderer = null
     camera = null
     controls = null
+    statsControls = null
     isDestroy = false
     animateEventList = []
-
+    raycaster = null
     raycasterObjects = []
+    mouse = {}
+    mouseEvent = {}
+    EventBus = null
+    skyboxs = null
     constructor(id = '') {
         this.id = id
         this.#initViewer()
@@ -21,16 +29,47 @@ export default class Viewer {
         const axis = new AxesHelper(5);
         this.scene?.add(axis);
     }
+    addStats() {
+        if (!this.statsControls) this.statsControls = new Stats();
+        this.statsControls.dom.style.position = 'absolute';
+        this.viewerDom.appendChild(this.statsControls.dom);
+
+        // 添加到动画
+        this.addAnimate({
+            fun: this.#statsUpdate,
+            content: this.statsControls,
+        });
+    }
+    #statsUpdate(statsControls) {
+        statsControls.update();
+    }
     addAnimate(animate) {
         this.animateEventList.push(animate);
+    }
+    initRaycaster(){
+        this.raycaster = new Raycaster()
+        const initRaycasterEvent = (eventName) => {
+            const funWrap = (event) => {
+                    this.mouseEvent = event;
+                    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                    this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+                    // @ts-expect-error
+                    this.EventBus.emit(Events[eventName].raycaster, this.#getRaycasterIntersectObjects());
+                }
+            this.viewerDom.addEventListener(eventName, funWrap, false);
+        };
+
+        initRaycasterEvent('click');
+        initRaycasterEvent('dblclick');
+        initRaycasterEvent('mousemove');
     }
     setRaycasterObjects (objList) {
         this.raycasterObjects = objList;
     }
     #getRaycasterIntersectObjects(){
-        /*if (!this.raycasterObjects.length) return [];
+        if (!this.raycasterObjects.length) return [];
         this.raycaster.setFromCamera(this.mouse, this.camera);
-        return this.raycaster.intersectObjects(this.raycasterObjects, true);*/
+        return this.raycaster.intersectObjects(this.raycasterObjects, true);
     }
     destroy() {
         this.scene.traverse((child) => {
@@ -49,11 +88,15 @@ export default class Viewer {
         this.isDestroy = true;
     }
     #initViewer() {
+        this.EventBus = new EventBus()
         this.#initRender()
         this.#initScene()
         this.#initLight()
         this.#initCamera()
         this.#initControl()
+        this.#initSkybox()
+        this.raycaster = new Raycaster();
+        this.mouse = new Vector2();
         const animate = () => {
             if (this.isDestroy) return;
             requestAnimationFrame(animate);
@@ -83,7 +126,6 @@ export default class Viewer {
             // physicallyCorrectLights: true, // true/false 表示是否开启物理光照
         });
         this.renderer.clearDepth();
-
         this.renderer.shadowMap.enabled = true;
         this.renderer.outputColorSpace = SRGBColorSpace; // 可以看到更亮的材质，同时这也影响到环境贴图。
         this.viewerDom.appendChild(this.renderer.domElement);
@@ -128,6 +170,11 @@ export default class Viewer {
         this.controls.addEventListener('change', ()=>{
             this.renderer.render(this.scene, this.camera);
         });
+    }
+    #initSkybox() {
+        if (!this.skyboxs) this.skyboxs = new SkyBoxs(this);
+        this.skyboxs.addSkybox('night');
+        this.skyboxs.addFog();
     }
     #readerDom() {
         this.renderer?.render(this.scene,this.camera);

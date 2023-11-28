@@ -4,6 +4,7 @@ import ModelLoader from '@/modules/ModelLoader'
 import * as THREE from 'three'
 import {onMounted} from "vue";
 import {checkNameIncludes} from "@/utils";
+import Events from "@/modules/Viewer/Events";
 let viewer,modelLoader;
 let dataCenter,oldDataCenter;
 onMounted(()=>{
@@ -12,19 +13,23 @@ onMounted(()=>{
 })
 function init(){
   viewer = new Viewer('three')
+  viewer.initRaycaster();
   modelLoader = new ModelLoader(viewer);
   viewer.addAxis()
+  // viewer.addStats()
+  viewer.EventBus.on(Events.dblclick.raycaster,(list) => {
+    // console.log(list);
+  })
 }
 function initModel(){
   modelLoader.loadModelToScene('/models/index3/plane.glb', baseModel => {
-    // console.log(baseModel);
     const model = baseModel.gltf.scene;
     model.scale.set(0.0001 * 3, 0.0001 * 3, 0.0001 * 3)
     model.position.set(0, 0, 0);
     model.name = 'plane';
     baseModel.openCastShadow();
-
-    const texture = (baseModel.object.children[0]).material.map;
+    let material = (baseModel.object.children[0]).material
+    const texture = material.map;
     const fnOnj = planeAnimate(texture);
     viewer.addAnimate(fnOnj);
   });
@@ -39,18 +44,14 @@ function initModel(){
     dataCenter = baseModel;
     oldDataCenter = model.clone();
 
-    // const rackList= [];
-    // model.traverse(item => {
-    //   if (checkIsRack(item)) {
-    //     rackList.push(item);
-    //   }
-    // });
-    // // console.log(rackList, 'rackList------');
-    //
-    // viewer.setRaycasterObjects(rackList);
-
+    const rackList= [];
+    model.traverse(item => {
+      if (checkIsRack(item)) {
+        rackList.push(item);
+      }
+    });
+    viewer.setRaycasterObjects(rackList);
   });
-
 }
 const planeAnimate = (texture) => {
   texture.wrapS = THREE.RepeatWrapping;

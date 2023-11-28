@@ -5,7 +5,8 @@ export default class ModelLoader{
     viewer = null
     gltfLoader = null
     dracoLoader = null
-    constructor(viewer,decoderPath = 'https://www.gstatic.com/draco/versioned/decoders/1.5.6/') {
+    // constructor(viewer,decoderPath = 'https://www.gstatic.com/draco/versioned/decoders/1.5.6/') {
+    constructor(viewer,decoderPath = '/draco/') {
         this.viewer = viewer
         this.gltfLoader = new GLTFLoader()
         this.dracoLoader = new DRACOLoader()
