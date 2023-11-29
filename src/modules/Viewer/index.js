@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import Stats from 'three/examples/jsm/libs/stats.module';
 import Events,{EventBus} from "@/modules/Viewer/Events";
 import SkyBoxs from "@/modules/SkyBoxs";
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import * as THREE from 'three'
 
 export default class Viewer {
@@ -21,6 +22,7 @@ export default class Viewer {
     mouseEvent = {}
     EventBus = null
     skyboxs = null
+    pointerLockControls = null
     constructor(id = '') {
         this.id = id
         this.#initViewer()
@@ -93,7 +95,8 @@ export default class Viewer {
         this.#initScene()
         this.#initLight()
         this.#initCamera()
-        this.#initControl()
+        // this.#initControl()
+        this.#initPointerLockControls()
         this.#initSkybox()
         this.raycaster = new Raycaster();
         this.mouse = new Vector2();
@@ -157,7 +160,7 @@ export default class Viewer {
         // 渲染相机
         this.camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
         //设置相机位置
-        this.camera.position.set(4, 2, -3);
+        this.camera.position.set(0, 1, 2);
         //设置相机方向
         this.camera.lookAt(0, 0, 0);
     }
@@ -176,11 +179,15 @@ export default class Viewer {
         this.skyboxs.addSkybox('night');
         this.skyboxs.addFog();
     }
+    #initPointerLockControls(){
+        this.pointerLockControls = new PointerLockControls(this.camera, this.renderer?.domElement)
+        this.scene.add(this.pointerLockControls.getObject())
+    }
     #readerDom() {
         this.renderer?.render(this.scene,this.camera);
     }
     #updateDom() {
-        this.controls.update();
+        this.controls?.update();
         // 更新参数
         this.camera.aspect = this.viewerDom.clientWidth / this.viewerDom.clientHeight; // 摄像机视锥体的长宽比，通常是使用画布的宽/画布的高
         this.camera.updateProjectionMatrix(); // 更新摄像机投影矩阵。在任何参数被改变以后必须被调用,来使得这些改变生效
