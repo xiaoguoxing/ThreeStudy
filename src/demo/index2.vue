@@ -30,6 +30,10 @@ function initModel(){
     baseModel.openCastShadow();
     let material = (baseModel.object.children[0]).material
     const texture = material.map;
+    console.log(material);
+    material.emissiveIntensity =  0.9;
+    material.emissive =  material.color;
+    material.emissiveMap = material.map ;
     const fnOnj = planeAnimate(texture);
     viewer.addAnimate(fnOnj);
   });
@@ -43,11 +47,16 @@ function initModel(){
 
     dataCenter = baseModel;
     oldDataCenter = model.clone();
-
     const rackList= [];
     model.traverse(item => {
       if (checkIsRack(item)) {
         rackList.push(item);
+      }
+      if(item.isMesh){
+        let material = item.material
+        // material.emissive =  material.color;
+        // material.emissiveMap = material.map ;
+        // material.emissiveIntensity =  0.9;
       }
     });
     viewer.setRaycasterObjects(rackList);
@@ -59,7 +68,7 @@ const planeAnimate = (texture) => {
   const animateFn = {
     fun: () => {
       const count = texture.repeat.y;
-      if (count <= 5) {
+      if (count <= 10) {
         texture.repeat.x += 0.01;
         texture.repeat.y += 0.02;
       } else {

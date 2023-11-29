@@ -35,9 +35,7 @@ export default class SkyBoxs {
             path + 'posz' + format,
             path + 'negz' + format,
         ]);
-        console.log(cubeTexture);
         // 需要把色彩空间编码改一下
-        cubeTexture.encoding = THREE.sRGBEncoding;
         this.viewer.scene.background = cubeTexture;
     }
 }

@@ -127,7 +127,6 @@ export default class Viewer {
         });
         this.renderer.clearDepth();
         this.renderer.shadowMap.enabled = true;
-        this.renderer.outputColorSpace = SRGBColorSpace; // 可以看到更亮的材质，同时这也影响到环境贴图。
         this.viewerDom.appendChild(this.renderer.domElement);
     }
     #initScene() {
@@ -138,7 +137,7 @@ export default class Viewer {
         const ambient = new AmbientLight(0xffffff, 0.6);
         this.scene.add(ambient);
 
-        const light = new THREE.DirectionalLight( 0xffffff );
+        const light = new THREE.DirectionalLight( 0xffffff,5 );
         light.position.set( 0, 200, 100 );
         light.castShadow = true;
 
@@ -152,6 +151,7 @@ export default class Viewer {
         light.shadow.mapSize.set(1024, 1024);
 
         this.scene.add(light);
+
     }
     #initCamera() {
         // 渲染相机
