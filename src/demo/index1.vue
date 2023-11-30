@@ -186,7 +186,7 @@ onMounted(() => {
     //
     // });
   };
-  // FirstPerson()
+  FirstPerson()
   const control = () => {
     // console.log(modelCopy.value, 'modelCopy')
     controls = new OrbitControls(camera, renderer.domElement);
@@ -210,7 +210,7 @@ onMounted(() => {
 
     });
   };
-  control();
+  // control();
   // 光源
   const linght = () => {
     // const light = new THREE.DirectionalLight( 0xffffff, 1);

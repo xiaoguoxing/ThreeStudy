@@ -4,22 +4,31 @@ import ModelLoader from '@/modules/ModelLoader'
 import Floors from "@/modules/Floors";
 import BoxHelperWrap from "@/modules/BoxHelperWrap";
 import * as THREE from 'three'
-import {onMounted} from "vue";
-import {checkNameIncludes,findParent} from "@/utils";
+import {onMounted, ref} from "vue";
+import {checkNameIncludes, findParent} from "@/utils";
 import Events from "@/modules/Viewer/Events";
-let viewer,modelLoader,floors,boxHelperWrap,pointerLockControls;
-let dataCenter,oldDataCenter;
+import gsap from 'gsap'
+import { throttle } from 'lodash-es';
+let viewer, modelLoader, floors, boxHelperWrap, pointerLockControls;
+let dataCenter, oldDataCenter;
 let modelSelect = ['zuo0', 'zuo1', 'zuo2', 'zuo3', 'zuo4', 'zuo5'];
 let modelMoveName = '';
 let modelSelectName = '';
 let isModelSelectName = false;
 let oldOffice = null;
 let office = null;
-onMounted(()=>{
+let threeRef = ref(null)
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
+let canJump = true
+onMounted(() => {
   init()
   initModel()
 })
-function init(){
+
+function init() {
   viewer = new Viewer('three')
   viewer.initRaycaster();
   pointerLockControls = viewer.pointerLockControls
@@ -28,94 +37,161 @@ function init(){
   // floors = new Floors(viewer);
   // floors.addGrid()
   viewer.addAxis()
-  // viewer.addStats()
-  viewer.EventBus.on(Events.dblclick.raycaster,(list) => {
+  viewer.EventBus.on(Events.dblclick.raycaster, (list) => {
     // console.log(list);
   })
-  viewer.EventBus.on(Events.mousemove.raycaster,(list) => {
+  viewer.EventBus.on(Events.click.raycaster, (list) => {
+      pointerLockControls.lock();
+      document.addEventListener('keydown', onKeyDown);
+      document.addEventListener('keyup', onKeyUp);
+  })
+  viewer.EventBus.on(Events.mousemove.raycaster, (list) => {
     // console.log(list);
     onMouseMove(list)
   })
   initControls()
 }
-function initControls(){
-  let moveForward = false;
-  let moveBackward = false;
-  let moveLeft = false;
-  let moveRight = false;
-  let canJump = false;
+
+function initControls() {
+
   const velocity = new THREE.Vector3();
-  three.addEventListener( 'click', function () {
-    pointerLockControls.lock();
+  const direction = new THREE.Vector3();
+  let prevTime = performance.now();
 
-  } );
+  pointerLockControls.addEventListener('unlock',function (){
+    document.removeEventListener('keydown', onKeyDown);
+    document.removeEventListener('keyup', onKeyUp);
+  })
 
-  const onKeyDown = function ( event ) {
+  let animateFn = {
+    fun: () => {
+      const time = performance.now();
+      if (pointerLockControls.isLocked === true) {
+        const delta = (time - prevTime) / 1000;
 
-    switch ( event.code ) {
+        velocity.x -= velocity.x * 5.0 * delta;
+        velocity.z -= velocity.z * 5.0 * delta;
+        direction.z = Number(moveForward) - Number(moveBackward);
+        direction.x = Number(moveRight) - Number(moveLeft);
+        direction.normalize(); // this ensures consistent movements in all directions
 
-      case 'ArrowUp':
-      case 'KeyW':
-        console.log('123');
-        moveForward = true;
-        break;
+        if (moveForward || moveBackward) velocity.z -= direction.z * 40.0 * delta;
+        if (moveLeft || moveRight) velocity.x -= direction.x * 40.0 * delta;
+        pointerLockControls.moveRight(-velocity.x * delta);
+        pointerLockControls.moveForward(-velocity.z * delta);
+      }
+      prevTime = time;
+    },
+    content: viewer,
+  }
 
-      case 'ArrowLeft':
-      case 'KeyA':
-        moveLeft = true;
-        break;
-
-      case 'ArrowDown':
-      case 'KeyS':
-        moveBackward = true;
-        break;
-
-      case 'ArrowRight':
-      case 'KeyD':
-        moveRight = true;
-        break;
-
-      case 'Space':
-        if ( canJump === true ) velocity.y += 350;
-        canJump = false;
-        break;
-
-    }
-
-  };
-
-  const onKeyUp = function ( event ) {
-
-    switch ( event.code ) {
-
-      case 'ArrowUp':
-      case 'KeyW':
-        moveForward = false;
-        break;
-
-      case 'ArrowLeft':
-      case 'KeyA':
-        moveLeft = false;
-        break;
-
-      case 'ArrowDown':
-      case 'KeyS':
-        moveBackward = false;
-        break;
-
-      case 'ArrowRight':
-      case 'KeyD':
-        moveRight = false;
-        break;
-
-    }
-
-  };
-
-  document.addEventListener( 'keydown', onKeyDown );
-  document.addEventListener( 'keyup', onKeyUp );
+  viewer.addAnimate(animateFn)
 }
-function initModel(){
+const onKeyDown = function (event) {
+
+  switch (event.code) {
+
+    case 'ArrowUp':
+    case 'KeyW':
+      moveForward = true;
+      break;
+
+    case 'ArrowLeft':
+    case 'KeyA':
+      moveLeft = true;
+      break;
+
+    case 'ArrowDown':
+    case 'KeyS':
+      moveBackward = true;
+      break;
+
+    case 'ArrowRight':
+    case 'KeyD':
+      moveRight = true;
+      break;
+
+    case 'Space':
+      if(canJump){
+        let a = gsap.fromTo(pointerLockControls.getObject().position,
+            {
+              y: 0.3,
+            },
+            {
+              y: 1,
+              duration: 0.4,
+              onStart(){
+                canJump = false
+              },
+              onComplete() {
+                a.reverse()
+              },
+              onReverseComplete(){
+                canJump = true
+              }
+            }
+        )
+      }
+      break;
+  }
+};
+
+const onKeyUp = function (event) {
+
+  switch (event.code) {
+
+    case 'ArrowUp':
+    case 'KeyW':
+      moveForward = false;
+      break;
+
+    case 'ArrowLeft':
+    case 'KeyA':
+      moveLeft = false;
+      break;
+
+    case 'ArrowDown':
+    case 'KeyS':
+      moveBackward = false;
+      break;
+
+    case 'ArrowRight':
+    case 'KeyD':
+      moveRight = false;
+      break;
+  }
+
+}
+
+function initModel() {
+  modelLoader.loadModelToScene('/models/index3/zuo.glb', baseModel => {
+    baseModel.setScale(0.01);
+    const model = baseModel.gltf.scene;
+    office = baseModel;
+    office.object.rotation.y = Math.PI;
+    office.object.position.set(2, 0, 0);
+    // model.position.set(80, 2, 90);
+    office.object.children.forEach((item) => {
+      item.name = item.name.replace('zuo', '');
+      if (item.name === 'ding') {
+        item.name = 6;
+      }
+      item.name--;
+    });
+    office.object.children.sort((a, b) => a.name - b.name).forEach((v) => {
+      v.name = 'zuo' + v.name;
+    });
+    model.visible = false
+    model.name = '办公楼';
+    baseModel.openCastShadow();
+    oldOffice = model.clone();
+
+    const list = [];
+    model.traverse(item => {
+      list.push(item);
+    });
+    // viewer.setRaycasterObjects(list);
+  });
   modelLoader.loadModelToScene('/models/index3/plane.glb', baseModel => {
     const model = baseModel.gltf.scene;
     model.scale.set(0.0001 * 3, 0.0001 * 3, 0.0001 * 3)
@@ -124,9 +200,9 @@ function initModel(){
     baseModel.openCastShadow();
     let material = (baseModel.object.children[0]).material
     const texture = material.map;
-    material.emissiveIntensity =  0.9;
-    material.emissive =  material.color;
-    material.emissiveMap = material.map ;
+    material.emissiveIntensity = 0.9;
+    material.emissive = material.color;
+    material.emissiveMap = material.map;
     const fnOnj = planeAnimate(texture);
     viewer.addAnimate(fnOnj);
   });
@@ -140,12 +216,12 @@ function initModel(){
 
     dataCenter = baseModel;
     oldDataCenter = model.clone();
-    const rackList= [];
+    const rackList = [];
     model.traverse(item => {
       if (checkIsRack(item)) {
         rackList.push(item);
       }
-      if(item.isMesh){
+      if (item.isMesh) {
         let material = item.material
         // material.emissive =  material.color;
         // material.emissiveMap = material.map ;
@@ -155,6 +231,7 @@ function initModel(){
     viewer.setRaycasterObjects(rackList);
   });
 }
+
 const planeAnimate = (texture) => {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -173,10 +250,12 @@ const planeAnimate = (texture) => {
   };
   return animateFn;
 }
-function checkIsRack (obj) {
+
+function checkIsRack(obj) {
   return checkNameIncludes(obj, 'rack');
 }
-function onMouseMove(intersects=[]){
+
+function onMouseMove(intersects = []) {
   if (!intersects.length) {
     // popoverRef.value.setShow(false);
     boxHelperWrap.setVisible(false);
@@ -233,9 +312,10 @@ function onMouseMove(intersects=[]){
   });
  */
 }
+
 const updateRackInfo = (name) => {
   if (name) {
-    popoverRef.value.setShow(true, { name });
+    popoverRef.value.setShow(true, {name});
     const event = viewer.mouseEvent;
     popoverTop.value = event.y + 10;
     popoverLeft.value = event.x + 10;
@@ -247,11 +327,11 @@ const updateRackInfo = (name) => {
 </script>
 
 <template>
-  <div id="three"></div>
+  <div id="three" ref="threeRef"></div>
 </template>
 
 <style scoped>
-#three{
+#three {
   width: 100vw;
   height: 100vh;
 }

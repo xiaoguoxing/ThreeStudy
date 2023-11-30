@@ -135,6 +135,7 @@ export default class Viewer {
     #initScene() {
         this.scene = new Scene()
         // this.scene.background = new Color('#0C1B2E')
+        this.scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
     }
     #initLight() {
         const ambient = new AmbientLight(0xffffff, 0.6);
@@ -158,11 +159,15 @@ export default class Viewer {
     }
     #initCamera() {
         // 渲染相机
-        this.camera = new PerspectiveCamera(25, window.innerWidth / window.innerHeight, 1, 2000);
+        this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, undefined, 1000);
         //设置相机位置
-        this.camera.position.set(0, 1, 2);
+        this.camera.position.set(2, .3, 0);
+
+        this.camera.scale.set(0.2,0.2,0.2);
         //设置相机方向
-        this.camera.lookAt(0, 0, 0);
+        this.camera.lookAt(0, this.camera.position.y, 0);
+        // const helper = new THREE.CameraHelper( this.camera );
+        // this.scene.add( helper );
     }
     #initControl() {
         this.controls = new OrbitControls(this.camera, this.renderer?.domElement);
