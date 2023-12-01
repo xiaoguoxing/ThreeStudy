@@ -5,7 +5,6 @@ import Events,{EventBus} from "@/modules/Viewer/Events";
 import SkyBoxs from "@/modules/SkyBoxs";
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
 import * as THREE from 'three'
-
 export default class Viewer {
     id = ''
     viewerDom = ''
@@ -23,8 +22,10 @@ export default class Viewer {
     EventBus = null
     skyboxs = null
     pointerLockControls = null
-    constructor(id = '') {
+    isDefaultControls = true
+    constructor(id = '',isDefaultControls=true) {
         this.id = id
+        this.isDefaultControls = isDefaultControls
         this.#initViewer()
     }
     addAxis() {
@@ -58,7 +59,7 @@ export default class Viewer {
                     // @ts-expect-error
                     this.EventBus.emit(Events[eventName].raycaster, this.#getRaycasterIntersectObjects());
                 }
-            this.viewerDom.addEventListener(eventName, funWrap, false);
+            this.renderer.domElement.addEventListener(eventName, funWrap, false);
         };
 
         initRaycasterEvent('click');
@@ -66,7 +67,7 @@ export default class Viewer {
         initRaycasterEvent('mousemove');
     }
     setRaycasterObjects (objList) {
-        this.raycasterObjects = objList;
+        this.raycasterObjects.push(...objList);
     }
     #getRaycasterIntersectObjects(){
         if (!this.raycasterObjects.length) return [];
@@ -95,8 +96,7 @@ export default class Viewer {
         this.#initScene()
         this.#initLight()
         this.#initCamera()
-        // this.#initControl()
-        this.#initPointerLockControls()
+        if(this.isDefaultControls) this.#initControl();
         this.#initSkybox()
         this.raycaster = new Raycaster();
         this.mouse = new Vector2();
@@ -160,12 +160,7 @@ export default class Viewer {
     #initCamera() {
         // 渲染相机
         this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, undefined, 1000);
-        //设置相机位置
-        this.camera.position.set(2, .3, 0);
 
-        this.camera.scale.set(0.2,0.2,0.2);
-        //设置相机方向
-        this.camera.lookAt(0, this.camera.position.y, 0);
         // const helper = new THREE.CameraHelper( this.camera );
         // this.scene.add( helper );
     }
@@ -173,7 +168,7 @@ export default class Viewer {
         this.controls = new OrbitControls(this.camera, this.renderer?.domElement);
         this.controls.enableDamping = false;
         this.controls.screenSpacePanning = false; // 定义平移时如何平移相机的位置 控制不上下移动
-        this.controls.minDistance = 2;
+        this.controls.minDistance = 0;
         this.controls.maxDistance = 1000;
         this.controls.addEventListener('change', ()=>{
             this.renderer.render(this.scene, this.camera);
@@ -184,9 +179,10 @@ export default class Viewer {
         this.skyboxs.addSkybox('night');
         this.skyboxs.addFog();
     }
-    #initPointerLockControls(){
+    initPointerLockControls(){
         this.pointerLockControls = new PointerLockControls(this.camera, this.renderer?.domElement)
         this.scene.add(this.pointerLockControls.getObject())
+        return this.pointerLockControls
     }
     #readerDom() {
         this.renderer?.render(this.scene,this.camera);

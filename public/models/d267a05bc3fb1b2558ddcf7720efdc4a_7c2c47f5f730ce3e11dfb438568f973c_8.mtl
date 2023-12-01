@@ -1,0 +1,547 @@
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-进水渠-进口闸-张子沛20230807.dgn_3D_Metric_Design_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl 混凝土护坦输出__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_215_213_203_vis
+    Ns 0.000000
+    Kd 0.843137 0.835294 0.796078
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl C30混凝土护坡输出__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_183_179_168_vis
+    Ns 0.000000
+    Kd 0.717647 0.701961 0.658824
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 粗砂垫层__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_205_186_136_vis
+    Ns 0.000000
+    Kd 0.803922 0.729412 0.533333
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 碎石垫层__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_205_186_136_vis
+    Ns 0.000000
+    Kd 0.803922 0.729412 0.533333
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 钻孔灌装柱__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_183_179_168_vis
+    Ns 0.000000
+    Kd 0.717647 0.701961 0.658824
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Grass_area__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_Landscape_9d92_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\patterns\Grass10.jpg
+
+newmtl 护坡__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_215_213_203_vis
+    Ns 0.000000
+    Kd 0.843137 0.835294 0.796078
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 护坡__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_255_255_255_vis
+    Ns 0.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Grass_area__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_Landscape_52a_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Grass_area_baseColor.jpg
+
+newmtl 框格梁植被护坡输出__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_0_131_81_vis
+    Ns 0.000000
+    Kd 0.000000 0.513725 0.317647
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 栏杆__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 建筑物__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_Concrete&Pavers_9d84_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\patterns\concrete03.jpg
+
+newmtl Grass_a_little_rough__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_Landscape_529_vis
+    Ns 2.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\WSDOT00_baseColor.jpg
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-进水渠-上游-张子沛20230808.dgn_3D_Metric_Design_183_179_168_vis
+    Ns 0.000000
+    Kd 0.717647 0.701961 0.658824
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 钻孔灌注桩__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_Concrete&Pavers_100b6_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\patterns\concrete03.jpg
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_79_82_80_vis
+    Ns 0.000000
+    Kd 0.309804 0.321569 0.313725
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Block_(Tan)__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_Blocks&Bricks_311_vis
+    Ns 5.000000
+    Kd 0.929412 0.901961 0.827451
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\CMU02baseColor.jpg
+
+newmtl Material_#29111__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_hbgd-a1-地心泵站-土建-管理楼-刘博文20230802_1013c_vis
+    Ns 45.000000
+    Kd 0.588000 0.588000 0.588000
+    Ks 0.900000 0.900000 0.900000
+
+newmtl Default__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_255_255_255_vis
+    Ns 0.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 寤虹瓚鐜荤拑__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_hbgd-a1-地心泵站-土建-管理楼-刘博文20230802_1013d_vis
+    Ns 82.000000
+    Kd 0.294118 0.411765 0.498039
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Material_#2100436806__HBGD-A1-地心泵站-土建-进水渠-拦污闸-张子沛20230808.dgn_3D_Metric_Design_hbgd-a1-地心泵站-土建-管理楼-刘博文20230802_1013e_vis
+    Ns 107.000000
+    Kd 0.380392 0.400000 0.419608
+    Ks 0.330000 0.330000 0.330000
+
+newmtl 混凝土__HBGD-A1-地心泵站-土建-进水渠-隔流结构-张子沛20230808.dgn_3D_Metric_Design_183_179_168_vis
+    Ns 0.000000
+    Kd 0.717647 0.701961 0.658824
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 垫层__HBGD-A1-地心泵站-土建-进水渠-隔流结构-张子沛20230808.dgn_3D_Metric_Design_205_186_136_vis
+    Ns 0.000000
+    Kd 0.803922 0.729412 0.533333
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 路面__HBGD-A1-地心泵站-土建-进水渠-隔流结构-张子沛20230808.dgn_3D_Metric_Design_183_179_168_vis
+    Ns 0.000000
+    Kd 0.717647 0.701961 0.658824
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 栏杆__HBGD-A1-地心泵站-土建-进水渠-隔流结构-张子沛20230808.dgn_3D_Metric_Design_255_255_255_vis
+    Ns 0.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl 回填碎石__HBGD-A1-地心泵站-土建-进水渠-隔流结构-张子沛20230808.dgn_3D_Metric_Design_164_87_41_vis
+    Ns 0.000000
+    Kd 0.643137 0.341176 0.160784
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Gray_glass_no_refract__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_glass&plastic_18b1f_vis
+    Ns 90.000000
+    Kd 0.454902 0.454902 0.454902
+    Ks 0.454902 0.454902 0.454902
+
+    map_Kd 
+
+newmtl Aluminum_billet__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_Metals_18ae3_vis
+    Ns 30.000000
+    Kd 0.847059 0.901961 0.921569
+    Ks 0.847059 0.901961 0.921569
+
+    map_Kd 
+
+newmtl A-GLAZ__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Aluminum__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_Metals_18ae4_vis
+    Ns 90.000000
+    Kd 0.650980 0.647059 0.643137
+    Ks 0.949020 0.941176 0.921569
+
+    map_Kd 
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_119_136_153_vis
+    Ns 0.000000
+    Kd 0.466667 0.533333 0.600000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl CF_CN_YQL__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl A-WALL-EXTL__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl S-BEAM-CONC__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Block_(Grey)__HBGD-A1-地心泵站-土建-检修阀室-刘博文20230802.dgn_Design_Model_Blocks&Bricks_310_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\CMU01baseColor.jpg
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-量水间-刘博文20230802.dgn_Design_Model_119_136_153_vis
+    Ns 0.000000
+    Kd 0.466667 0.533333 0.600000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-量水间-刘博文20230802.dgn_Design_Model_236_236_231_vis
+    Ns 0.000000
+    Kd 0.925490 0.925490 0.905882
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-主泵房-出水管-刘博文20230809.dgn_Design_Model_119_136_153_vis
+    Ns 0.000000
+    Kd 0.466667 0.533333 0.600000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-主泵房-出水管-刘博文20230809.dgn_Design_Model_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl S-WALL-CONC__HBGD-A1-地心泵站-土建-主泵房-进水管-刘博文20230808.dgn_Design_Model_119_136_153_vis
+    Ns 0.000000
+    Kd 0.466667 0.533333 0.600000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-主泵房-进水管-刘博文20230808.dgn_Design_Model_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl Concrete_3__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl Brick_Hayden's_red__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Blocks&Bricks_318_vis
+    Ns 2.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\brick34baseColor.jpg
+
+newmtl Aluminum_billet__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Metals_420_vis
+    Ns 53.000000
+    Kd 0.662745 0.705882 0.721569
+    Ks 0.662745 0.705882 0.721569
+
+    map_Kd 
+
+newmtl Stainless_steel__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Metals_439_vis
+    Ns 80.000000
+    Kd 0.819608 0.807843 0.772549
+    Ks 0.819608 0.807843 0.772549
+
+    map_Kd 
+
+newmtl Gray_glass_no_refract__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Glass&Plastic_458_vis
+    Ns 30.000000
+    Kd 0.454902 0.454902 0.454902
+    Ks 0.454902 0.454902 0.454902
+
+    map_Kd 
+
+newmtl Wood19__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Wood_3b1_vis
+    Ns 7.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Wood19l_baseColor.png
+
+newmtl Aggregate_Base_Typ_A__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Civil_15931_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+newmtl Global__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_74_29_13_排涝箱涵图0811_159cf_vis
+    Ns 50.000000
+    Kd 0.290196 0.113725 0.050980
+    Ks 0.000000 0.000000 0.000000
+
+    map_Kd 
+
+newmtl Default__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_160_160_160_vis
+    Ns 0.000000
+    Kd 0.627451 0.627451 0.627451
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Galvanized_steel_2__HBGD-A1-排涝泵站及防洪闸ZZ-廖祥君202308015.dgn_Design_Model_Metals_42b_vis
+    Ns 1.000000
+    Kd 0.623529 0.631373 0.615686
+    Ks 0.623529 0.631373 0.615686
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Galvanized_Metal_baseColor.jpg
+
+newmtl Aluminum_billet_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Metals_420_vis
+    Ns 53.000000
+    Kd 0.662745 0.705882 0.721569
+    Ks 0.662745 0.705882 0.721569
+
+    map_Kd 
+
+newmtl Stainless_steel_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Metals_439_vis
+    Ns 80.000000
+    Kd 0.819608 0.807843 0.772549
+    Ks 0.819608 0.807843 0.772549
+
+    map_Kd 
+
+newmtl S-WALL-CONC_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Steel_polished_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Metals_43d_vis
+    Ns 82.000000
+    Kd 0.384314 0.396078 0.450980
+    Ks 0.792157 0.847059 0.890196
+
+    map_Kd 
+
+newmtl Paint_semi_gloss_(White)_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Interior_finishes_4cd_vis
+    Ns 15.000000
+    Kd 0.968627 0.968627 0.968627
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_3_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl Block_(Grey)_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Blocks&Bricks_310_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\CMU01baseColor.jpg
+
+newmtl CF_CN_EQD_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_2_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Concrete&Pavers_13fd3_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\patterns\concrete02.jpg
+
+newmtl Default_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl S-SLAB-CONC_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_192_192_192_vis
+    Ns 0.000000
+    Kd 0.752941 0.752941 0.752941
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Concrete_2_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Concrete&Pavers_4fe_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete02_baseColor.jpg
+
+newmtl Steel_cast_参考_HBGD-A1-地心泵站-土建-泵房段ZZ-刘博文20230815.dgn_Design_Model_Metals_43c_vis
+    Ns 68.000000
+    Kd 0.545098 0.623529 0.701961
+    Ks 0.545098 0.623529 0.701961
+
+    map_Kd 
+
+newmtl Concrete_3__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Concrete&Pavers_4ff_vis
+    Ns 1.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\Concrete03_baseColor.jpg
+
+newmtl Material_#2100437047__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_地心泵站-土建-上部结构_13275_vis
+    Ns 45.000000
+    Kd 0.588000 0.588000 0.588000
+    Ks 0.900000 0.900000 0.900000
+
+newmtl Gray_glass_no_refract__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Glass&Plastic_458_vis
+    Ns 30.000000
+    Kd 0.454902 0.454902 0.454902
+    Ks 0.454902 0.454902 0.454902
+
+    map_Kd 
+
+newmtl Aluminum_billet__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Metals_420_vis
+    Ns 53.000000
+    Kd 0.662745 0.705882 0.721569
+    Ks 0.662745 0.705882 0.721569
+
+    map_Kd 
+
+newmtl Block_(Grey)__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Blocks&Bricks_310_vis
+    Ns 5.000000
+    Kd 1.000000 1.000000 1.000000
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd C:\ProgramData\Bentley\connectsharedcontent\materials\PBR_Materials\CMU01baseColor.jpg
+
+newmtl Material_#2100436806__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_地心泵站-土建-上部结构_131dd_vis
+    Ns 107.000000
+    Kd 0.380392 0.400000 0.419608
+    Ks 0.330000 0.330000 0.330000
+
+newmtl Material_#29111__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_地心泵站-土建-上部结构_131fe_vis
+    Ns 45.000000
+    Kd 0.588000 0.588000 0.588000
+    Ks 0.900000 0.900000 0.900000
+
+newmtl A-WALL-EXTL__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_100_104_110_vis
+    Ns 0.000000
+    Kd 0.392157 0.407843 0.431373
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Steel_polished__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Metals_43d_vis
+    Ns 82.000000
+    Kd 0.384314 0.396078 0.450980
+    Ks 0.792157 0.847059 0.890196
+
+    map_Kd 
+
+newmtl Paint_semi_gloss_(White)__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Interior_finishes_4cd_vis
+    Ns 15.000000
+    Kd 0.968627 0.968627 0.968627
+    Ks 1.000000 1.000000 1.000000
+
+    map_Kd 
+
+newmtl Stainless_steel__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Metals_439_vis
+    Ns 80.000000
+    Kd 0.819608 0.807843 0.772549
+    Ks 0.819608 0.807843 0.772549
+
+    map_Kd 
+
+newmtl Aluminum__HBGD-A1-地心泵站-土建-主泵房-上部结构-刘博文20230802.dgn_Design_Model_Metals_41f_vis
+    Ns 82.000000
+    Kd 0.650980 0.647059 0.643137
+    Ks 0.949020 0.941176 0.921569
+
+    map_Kd 

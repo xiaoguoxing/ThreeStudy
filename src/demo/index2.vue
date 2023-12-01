@@ -8,7 +8,8 @@ import {onMounted, ref} from "vue";
 import {checkNameIncludes, findParent} from "@/utils";
 import Events from "@/modules/Viewer/Events";
 import gsap from 'gsap'
-import { throttle } from 'lodash-es';
+import {throttle} from 'lodash-es';
+
 let viewer, modelLoader, floors, boxHelperWrap, pointerLockControls;
 let dataCenter, oldDataCenter;
 let modelSelect = ['zuo0', 'zuo1', 'zuo2', 'zuo3', 'zuo4', 'zuo5'];
@@ -17,12 +18,7 @@ let modelSelectName = '';
 let isModelSelectName = false;
 let oldOffice = null;
 let office = null;
-let threeRef = ref(null)
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-let canJump = true
+
 onMounted(() => {
   init()
   initModel()
@@ -31,7 +27,11 @@ onMounted(() => {
 function init() {
   viewer = new Viewer('three')
   viewer.initRaycaster();
-  pointerLockControls = viewer.pointerLockControls
+  //设置相机位置
+  viewer.camera.position.set(0, .4, 2);
+  //设置相机方向
+  viewer.camera.lookAt(0, viewer.camera.position.y, 0);
+
   modelLoader = new ModelLoader(viewer);
   boxHelperWrap = new BoxHelperWrap(viewer);
   // floors = new Floors(viewer);
@@ -39,137 +39,24 @@ function init() {
   viewer.addAxis()
   viewer.EventBus.on(Events.dblclick.raycaster, (list) => {
     // console.log(list);
+    onMouseClick(list)
   })
   viewer.EventBus.on(Events.click.raycaster, (list) => {
-      pointerLockControls.lock();
-      document.addEventListener('keydown', onKeyDown);
-      document.addEventListener('keyup', onKeyUp);
   })
   viewer.EventBus.on(Events.mousemove.raycaster, (list) => {
     // console.log(list);
     onMouseMove(list)
   })
-  initControls()
 }
-
-function initControls() {
-
-  const velocity = new THREE.Vector3();
-  const direction = new THREE.Vector3();
-  let prevTime = performance.now();
-
-  pointerLockControls.addEventListener('unlock',function (){
-    document.removeEventListener('keydown', onKeyDown);
-    document.removeEventListener('keyup', onKeyUp);
-  })
-
-  let animateFn = {
-    fun: () => {
-      const time = performance.now();
-      if (pointerLockControls.isLocked === true) {
-        const delta = (time - prevTime) / 1000;
-
-        velocity.x -= velocity.x * 5.0 * delta;
-        velocity.z -= velocity.z * 5.0 * delta;
-        direction.z = Number(moveForward) - Number(moveBackward);
-        direction.x = Number(moveRight) - Number(moveLeft);
-        direction.normalize(); // this ensures consistent movements in all directions
-
-        if (moveForward || moveBackward) velocity.z -= direction.z * 40.0 * delta;
-        if (moveLeft || moveRight) velocity.x -= direction.x * 40.0 * delta;
-        pointerLockControls.moveRight(-velocity.x * delta);
-        pointerLockControls.moveForward(-velocity.z * delta);
-      }
-      prevTime = time;
-    },
-    content: viewer,
-  }
-
-  viewer.addAnimate(animateFn)
-}
-const onKeyDown = function (event) {
-
-  switch (event.code) {
-
-    case 'ArrowUp':
-    case 'KeyW':
-      moveForward = true;
-      break;
-
-    case 'ArrowLeft':
-    case 'KeyA':
-      moveLeft = true;
-      break;
-
-    case 'ArrowDown':
-    case 'KeyS':
-      moveBackward = true;
-      break;
-
-    case 'ArrowRight':
-    case 'KeyD':
-      moveRight = true;
-      break;
-
-    case 'Space':
-      if(canJump){
-        let a = gsap.fromTo(pointerLockControls.getObject().position,
-            {
-              y: 0.3,
-            },
-            {
-              y: 1,
-              duration: 0.4,
-              onStart(){
-                canJump = false
-              },
-              onComplete() {
-                a.reverse()
-              },
-              onReverseComplete(){
-                canJump = true
-              }
-            }
-        )
-      }
-      break;
-  }
-};
-
-const onKeyUp = function (event) {
-
-  switch (event.code) {
-
-    case 'ArrowUp':
-    case 'KeyW':
-      moveForward = false;
-      break;
-
-    case 'ArrowLeft':
-    case 'KeyA':
-      moveLeft = false;
-      break;
-
-    case 'ArrowDown':
-    case 'KeyS':
-      moveBackward = false;
-      break;
-
-    case 'ArrowRight':
-    case 'KeyD':
-      moveRight = false;
-      break;
-  }
-
-}
-
 function initModel() {
   modelLoader.loadModelToScene('/models/index3/zuo.glb', baseModel => {
+
     baseModel.setScale(0.01);
     const model = baseModel.gltf.scene;
+    model.visible = true
     office = baseModel;
     office.object.rotation.y = Math.PI;
-    office.object.position.set(2, 0, 0);
+    office.object.position.set(.25, 0, 0);
     // model.position.set(80, 2, 90);
     office.object.children.forEach((item) => {
       item.name = item.name.replace('zuo', '');
@@ -181,16 +68,15 @@ function initModel() {
     office.object.children.sort((a, b) => a.name - b.name).forEach((v) => {
       v.name = 'zuo' + v.name;
     });
-    model.visible = false
     model.name = '办公楼';
     baseModel.openCastShadow();
     oldOffice = model.clone();
 
     const list = [];
-    model.traverse(item => {
+    model.traverseVisible(item => {
       list.push(item);
     });
-    // viewer.setRaycasterObjects(list);
+    viewer.setRaycasterObjects(list);
   });
   modelLoader.loadModelToScene('/models/index3/plane.glb', baseModel => {
     const model = baseModel.gltf.scene;
@@ -206,32 +92,7 @@ function initModel() {
     const fnOnj = planeAnimate(texture);
     viewer.addAnimate(fnOnj);
   });
-  modelLoader.loadModelToScene('/models/index3/datacenter.glb', baseModel => {
-    baseModel.setScale(0.2);
-    // baseModel.object.rotation.y = Math.PI / 2;
-    const model = baseModel.gltf.scene;
-    model.position.set(0, 0, 0);
-    model.name = '机房';
-    baseModel.openCastShadow();
-
-    dataCenter = baseModel;
-    oldDataCenter = model.clone();
-    const rackList = [];
-    model.traverse(item => {
-      if (checkIsRack(item)) {
-        rackList.push(item);
-      }
-      if (item.isMesh) {
-        let material = item.material
-        // material.emissive =  material.color;
-        // material.emissiveMap = material.map ;
-        // material.emissiveIntensity =  0.9;
-      }
-    });
-    viewer.setRaycasterObjects(rackList);
-  });
 }
-
 const planeAnimate = (texture) => {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
@@ -250,40 +111,17 @@ const planeAnimate = (texture) => {
   };
   return animateFn;
 }
-
 function checkIsRack(obj) {
   return checkNameIncludes(obj, 'rack');
 }
-
 function onMouseMove(intersects = []) {
   if (!intersects.length) {
-    // popoverRef.value.setShow(false);
-    boxHelperWrap.setVisible(false);
+
     return;
   }
   const selectedObject = intersects[0].object || {};
 
-  let selectedObjectName = '';
-  const findClickModel = (object) => {
-    if (object.name.includes('rack')) {
-      selectedObjectName = object.name;
-      boxHelperWrap.attach(object);
-      return;
-    }
-    if (object.parent) {
-      findClickModel(object.parent);
-    }
-  };
-
-  findClickModel(selectedObject);
-
-  /*
-    if (rack) {
-
-      boxHelperWrap.attach(rack);
-      // updateRackInfo(rack.name);
-    }
-    modelSelect.forEach((item) => {
+  modelSelect.forEach((item) => {
     if (item === selectedObject.parent?.name) {
       modelMoveName = item;
       if (modelSelectName === modelMoveName) return;
@@ -294,7 +132,7 @@ function onMouseMove(intersects = []) {
             transparent: true,
             depthTest: false,
             depthWrite: true, // 无法被选择，鼠标穿透
-            color: 'yellow',
+            color: 'pink',
             opacity: 0.3,
           });
         }
@@ -310,29 +148,99 @@ function onMouseMove(intersects = []) {
       }
     }
   });
- */
 }
+const onMouseClick = (intersects) => {
+  if (!intersects.length) return;
+  const selectedObject = intersects[0].object;
 
-const updateRackInfo = (name) => {
-  if (name) {
-    popoverRef.value.setShow(true, {name});
-    const event = viewer.mouseEvent;
-    popoverTop.value = event.y + 10;
-    popoverLeft.value = event.x + 10;
-  } else {
-    popoverRef.value.setShow(false);
+  let selectedObjectName = '';
+  const findClickModel = (object) => {
+    if (object.type === 'Group') {
+      selectedObjectName = object.name;
+    }
+    if (object.parent && object.type !== 'Scene') {
+      findClickModel(object.parent);
+    }
+  };
+  findClickModel(selectedObject);
 
+  // if (!selectedObjectName || !selectedObjectName.includes('办公楼')) {
+  //   // this.scene.remove(this.label);
+  //   return;
+  // }
+
+  // const selectedModel = viewer.scene.getObjectByName(selectedObjectName);
+
+  // 点击楼房
+  if (selectedObject.name.includes('zuo')) {
+
+    selectOffice(selectedObject.parent);
+  }
+
+  // 点击其他区域
+  if (!selectedObject.name.includes('zuo')) {
+    if (!isModelSelectName && oldOffice) {
+      let oldmodel = oldOffice.getObjectByName(modelMoveName);
+      office.object.getObjectByName(modelMoveName).traverse(function (child) {
+        if (child.isMesh) {
+          child.material = oldmodel.getObjectByName(child.name).material;
+        }
+      });
+    }
   }
 };
+const selectOffice = (model) => {
+  modelSelectName = model.name;
+  let oldmodel = oldOffice.getObjectByName(modelSelectName);
+  let modelSelectIndex = modelSelect.findIndex(v => v === modelSelectName);
+  office.object.children.forEach((child, index) => {
+    child.children.forEach((Mesh) => {
+      if (child.name === modelSelectName) {
+        child.children.forEach((Mesh) => {
+          Mesh.material = oldmodel.getObjectByName(Mesh.name).material;
+        });
+      } else {
+        // Mesh.material = new THREE.MeshPhongMaterial({
+        //   color: new THREE.Color('#123ca8'),
+        //   transparent: true,
+        //   opacity: 0.5,
+        //   emissiveMap: Mesh.material.map,
+        // });
+      }
+    });
+    if (!model.userData.position && index > modelSelectIndex) {
+      gsap.to(child.position, {
+        y: !child.userData.position ? child.position.y + 60 : child.position.y,
+        duration: 2,
+        ease: "power1.inOut",
+        onComplete: () => {
+          child.userData.position = true;
+        },
+      });
+    }
+    if (model.userData.position && index <= modelSelectIndex) {
+      if (child.userData.position) {
+        gsap.to(child.position, {
+          y: oldOffice.getObjectByName(child.name).position.y,
+          duration: 2,
+          ease: "power1.inOut",
+          onComplete: () => {
+            child.userData.position = false;
+          },
+        });
+      }
+    }
+  });
+};
 </script>
-
 <template>
-  <div id="three" ref="threeRef"></div>
+  <div id="three"></div>
 </template>
-
 <style scoped>
 #three {
+  position: relative;
   width: 100vw;
   height: 100vh;
+
 }
 </style>
