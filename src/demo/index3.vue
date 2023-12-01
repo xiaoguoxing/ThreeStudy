@@ -285,40 +285,6 @@ function onMouseMove(intersects = []) {
     boxHelperWrap.attach(rack);
     updateRackInfo(rack.name);
   }
-  /*
-    if (rack) {
-
-      boxHelperWrap.attach(rack);
-      // updateRackInfo(rack.name);
-    }
-    modelSelect.forEach((item) => {
-    if (item === selectedObject.parent?.name) {
-      modelMoveName = item;
-      if (modelSelectName === modelMoveName) return;
-      office.object.getObjectByName(item).traverse(function (child) {
-        if (child.isMesh) {
-          child.material = new THREE.MeshPhongMaterial({
-            side: THREE.DoubleSide,
-            transparent: true,
-            depthTest: false,
-            depthWrite: true, // 无法被选择，鼠标穿透
-            color: 'yellow',
-            opacity: 0.3,
-          });
-        }
-      });
-    } else {
-      if (!isModelSelectName && oldOffice) {
-        let oldmodel = oldOffice.getObjectByName(item);
-        office.object.getObjectByName(item).traverse(function (child) {
-          if (child.isMesh) {
-            child.material = oldmodel.getObjectByName(child.name).material;
-          }
-        });
-      }
-    }
-  });
- */
 }
 const updateRackInfo = (name) => {
   if (name) {

@@ -50,41 +50,39 @@ function init() {
 }
 function initModel() {
   modelLoader.loadModelToScene('/models/index3/zuo.glb', baseModel => {
-
     baseModel.setScale(0.01);
-    const model = baseModel.gltf.scene;
-    model.visible = true
-    office = baseModel;
-    office.object.rotation.y = Math.PI;
-    office.object.position.set(.25, 0, 0);
+    office = baseModel.object;
+    office.visible = true
+    office.rotation.y = Math.PI;
+    office.position.set(.25, 0, 0);
     // model.position.set(80, 2, 90);
-    office.object.children.forEach((item) => {
+    office.children.forEach((item) => {
       item.name = item.name.replace('zuo', '');
       if (item.name === 'ding') {
         item.name = 6;
       }
       item.name--;
     });
-    office.object.children.sort((a, b) => a.name - b.name).forEach((v) => {
+    office.children.sort((a, b) => a.name - b.name).forEach((v) => {
       v.name = 'zuo' + v.name;
     });
-    model.name = '办公楼';
+    office.name = '办公楼';
     baseModel.openCastShadow();
-    oldOffice = model.clone();
+    oldOffice = office.clone();
 
     const list = [];
-    model.traverseVisible(item => {
+    office.traverseVisible(item => {
       list.push(item);
     });
     viewer.setRaycasterObjects(list);
   });
   modelLoader.loadModelToScene('/models/index3/plane.glb', baseModel => {
-    const model = baseModel.gltf.scene;
+    const model = baseModel.object;
     model.scale.set(0.0001 * 3, 0.0001 * 3, 0.0001 * 3)
     model.position.set(0, 0, 0);
     model.name = 'plane';
     baseModel.openCastShadow();
-    let material = (baseModel.object.children[0]).material
+    let material = (model.children[0]).material
     const texture = material.map;
     material.emissiveIntensity = 0.9;
     material.emissive = material.color;
@@ -120,12 +118,11 @@ function onMouseMove(intersects = []) {
     return;
   }
   const selectedObject = intersects[0].object || {};
-
   modelSelect.forEach((item) => {
     if (item === selectedObject.parent?.name) {
       modelMoveName = item;
       if (modelSelectName === modelMoveName) return;
-      office.object.getObjectByName(item).traverse(function (child) {
+      office.getObjectByName(item).traverse(function (child) {
         if (child.isMesh) {
           child.material = new THREE.MeshPhongMaterial({
             side: THREE.DoubleSide,
@@ -140,7 +137,7 @@ function onMouseMove(intersects = []) {
     } else {
       if (!isModelSelectName && oldOffice) {
         let oldmodel = oldOffice.getObjectByName(item);
-        office.object.getObjectByName(item).traverse(function (child) {
+        office.getObjectByName(item).traverse(function (child) {
           if (child.isMesh) {
             child.material = oldmodel.getObjectByName(child.name).material;
           }
@@ -181,7 +178,7 @@ const onMouseClick = (intersects) => {
   if (!selectedObject.name.includes('zuo')) {
     if (!isModelSelectName && oldOffice) {
       let oldmodel = oldOffice.getObjectByName(modelMoveName);
-      office.object.getObjectByName(modelMoveName).traverse(function (child) {
+      office.getObjectByName(modelMoveName).traverse(function (child) {
         if (child.isMesh) {
           child.material = oldmodel.getObjectByName(child.name).material;
         }
@@ -193,7 +190,7 @@ const selectOffice = (model) => {
   modelSelectName = model.name;
   let oldmodel = oldOffice.getObjectByName(modelSelectName);
   let modelSelectIndex = modelSelect.findIndex(v => v === modelSelectName);
-  office.object.children.forEach((child, index) => {
+  office.children.forEach((child, index) => {
     child.children.forEach((Mesh) => {
       if (child.name === modelSelectName) {
         child.children.forEach((Mesh) => {
@@ -241,6 +238,5 @@ const selectOffice = (model) => {
   position: relative;
   width: 100vw;
   height: 100vh;
-
 }
 </style>
