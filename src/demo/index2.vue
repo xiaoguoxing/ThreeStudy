@@ -8,7 +8,6 @@ import {onMounted, ref} from "vue";
 import {checkNameIncludes, findParent} from "@/utils";
 import Events from "@/modules/Viewer/Events";
 import gsap from 'gsap'
-import {throttle} from 'lodash-es';
 
 let viewer, modelLoader, floors, boxHelperWrap, pointerLockControls;
 let dataCenter, oldDataCenter;
@@ -114,7 +113,9 @@ function checkIsRack(obj) {
 }
 function onMouseMove(intersects = []) {
   if (!intersects.length) {
-
+    if(modelMoveName){
+      materialOldChange(modelMoveName)
+    }
     return;
   }
   const selectedObject = intersects[0].object || {};
@@ -136,13 +137,16 @@ function onMouseMove(intersects = []) {
       });
     } else {
       if (!isModelSelectName && oldOffice) {
-        let oldmodel = oldOffice.getObjectByName(item);
-        office.getObjectByName(item).traverse(function (child) {
-          if (child.isMesh) {
-            child.material = oldmodel.getObjectByName(child.name).material;
-          }
-        });
+        materialOldChange(item)
       }
+    }
+  });
+}
+function materialOldChange(lastName){
+  let oldModel = oldOffice.getObjectByName(lastName);
+  office.getObjectByName(lastName).traverse(function (child) {
+    if (child.isMesh) {
+      child.material = oldModel.getObjectByName(child.name).material;
     }
   });
 }
@@ -150,64 +154,38 @@ const onMouseClick = (intersects) => {
   if (!intersects.length) return;
   const selectedObject = intersects[0].object;
 
-  let selectedObjectName = '';
-  const findClickModel = (object) => {
-    if (object.type === 'Group') {
-      selectedObjectName = object.name;
-    }
-    if (object.parent && object.type !== 'Scene') {
-      findClickModel(object.parent);
-    }
-  };
-  findClickModel(selectedObject);
-
-  // if (!selectedObjectName || !selectedObjectName.includes('办公楼')) {
-  //   // this.scene.remove(this.label);
-  //   return;
-  // }
-
-  // const selectedModel = viewer.scene.getObjectByName(selectedObjectName);
-
   // 点击楼房
   if (selectedObject.name.includes('zuo')) {
-
     selectOffice(selectedObject.parent);
   }
 
   // 点击其他区域
   if (!selectedObject.name.includes('zuo')) {
     if (!isModelSelectName && oldOffice) {
-      let oldmodel = oldOffice.getObjectByName(modelMoveName);
-      office.getObjectByName(modelMoveName).traverse(function (child) {
-        if (child.isMesh) {
-          child.material = oldmodel.getObjectByName(child.name).material;
-        }
-      });
+      materialOldChange(modelMoveName)
     }
   }
 };
 const selectOffice = (model) => {
   modelSelectName = model.name;
-  let oldmodel = oldOffice.getObjectByName(modelSelectName);
+  let oldModel = oldOffice.getObjectByName(modelSelectName);
   let modelSelectIndex = modelSelect.findIndex(v => v === modelSelectName);
   office.children.forEach((child, index) => {
-    child.children.forEach((Mesh) => {
-      if (child.name === modelSelectName) {
-        child.children.forEach((Mesh) => {
-          Mesh.material = oldmodel.getObjectByName(Mesh.name).material;
-        });
-      } else {
-        // Mesh.material = new THREE.MeshPhongMaterial({
-        //   color: new THREE.Color('#123ca8'),
-        //   transparent: true,
-        //   opacity: 0.5,
-        //   emissiveMap: Mesh.material.map,
-        // });
-      }
-    });
+    if (child.name === modelSelectName) {
+      child.children.forEach((Mesh) => {
+        Mesh.material = oldModel.getObjectByName(Mesh.name).material;
+      });
+    } else {
+      // Mesh.material = new THREE.MeshPhongMaterial({
+      //   color: new THREE.Color('#123ca8'),
+      //   transparent: true,
+      //   opacity: 0.5,
+      //   emissiveMap: Mesh.material.map,
+      // });
+    }
     if (!model.userData.position && index > modelSelectIndex) {
       gsap.to(child.position, {
-        y: !child.userData.position ? child.position.y + 60 : child.position.y,
+        y: !child.userData.position ? child.position.y + 40 : child.position.y,
         duration: 2,
         ease: "power1.inOut",
         onComplete: () => {
