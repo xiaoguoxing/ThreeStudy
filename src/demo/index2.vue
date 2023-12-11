@@ -31,6 +31,8 @@ function init() {
   //设置相机方向
   viewer.camera.lookAt(0, viewer.camera.position.y, 0);
 
+  // new Floors(viewer)
+
   modelLoader = new ModelLoader(viewer);
   boxHelperWrap = new BoxHelperWrap(viewer);
   // floors = new Floors(viewer);
@@ -80,6 +82,7 @@ function initModel() {
     model.scale.set(0.0001 * 3, 0.0001 * 3, 0.0001 * 3)
     model.position.set(0, 0, 0);
     model.name = 'plane';
+    model.visible = true
     baseModel.openCastShadow();
     let material = (model.children[0]).material
     const texture = material.map;

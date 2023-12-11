@@ -24,6 +24,10 @@ export default class ModelLoader{
         this.gltfLoader.load(url,(gltf)=>{
             const baseModel = new BaseModel(gltf, this.viewer);
             callback && callback(baseModel);
+        },function ( xhr ) {
+
+            // console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
         })
     }
 }
