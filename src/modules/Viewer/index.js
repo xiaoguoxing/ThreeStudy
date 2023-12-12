@@ -100,6 +100,7 @@ export default class Viewer {
         this.#initSkybox()
         this.raycaster = new Raycaster();
         this.mouse = new Vector2();
+        this.clock = new THREE.Clock()
         const animate = () => {
             if (this.isDestroy) return;
             requestAnimationFrame(animate);
@@ -155,6 +156,41 @@ export default class Viewer {
         light.shadow.mapSize.set(1024, 1024);
 
         this.scene.add(light);
+
+        const light2 = new THREE.PointLight( 0xff0000, 1);
+
+        light2.castShadow = true
+        light2.shadow.radius = 20
+        light2.shadow.mapSize.set(512,512)
+
+        const sphere = new THREE.Mesh(
+            new THREE.SphereGeometry( 5, 30, 30 ),
+            new THREE.MeshBasicMaterial( {
+            // metalness:0.5,
+            // roughness:0,
+            color:0xff0000
+            })
+        );
+
+        sphere.position.set(1,1,1)
+
+        sphere.scale.set(0.01,0.01,0.01)
+
+        sphere.add(light2)
+
+        this.scene.add( sphere );
+
+        const animateFn = {
+            fun: () => {
+                let time = this.clock.getElapsedTime()
+                sphere.position.x = Math.sin(time) * 0.5
+                sphere.position.z = Math.cos(time) * 0.5
+                // sphere.position.y = 2+Math.sin(time * 2)
+            },
+            content: this,
+        };
+
+        this.addAnimate(animateFn)
 
     }
     #initCamera() {

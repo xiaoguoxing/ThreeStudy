@@ -7,7 +7,7 @@ const  Sky = {
 }
 export default class SkyBoxs {
     viewer = null
-
+    cubeTexture = null
     constructor(viewer) {
         this.viewer = viewer
     }
@@ -27,7 +27,7 @@ export default class SkyBoxs {
     }
     #setSkybox (path, format = '.jpg') {
         const loaderbox = new THREE.CubeTextureLoader();
-        const cubeTexture = loaderbox.load([
+        this.cubeTexture = loaderbox.load([
             path + 'posx' + format,
             path + 'negx' + format,
             path + 'posy' + format,
@@ -36,6 +36,7 @@ export default class SkyBoxs {
             path + 'negz' + format,
         ]);
         // 需要把色彩空间编码改一下
-        this.viewer.scene.background = cubeTexture;
+        this.viewer.scene.background =  this.cubeTexture;
+        // this.viewer.scene.environment  =  this.cubeTexture;
     }
 }
