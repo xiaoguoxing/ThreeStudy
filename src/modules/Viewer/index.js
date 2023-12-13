@@ -1,10 +1,21 @@
-import {Scene, PerspectiveCamera, WebGLRenderer, SRGBColorSpace, AmbientLight, AxesHelper,Raycaster, Color,Vector2} from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    SRGBColorSpace,
+    AmbientLight,
+    AxesHelper,
+    Raycaster,
+    Color,
+    Vector2
+} from 'three'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import Stats from 'three/examples/jsm/libs/stats.module';
-import Events,{EventBus} from "@/modules/Viewer/Events";
+import Events, {EventBus} from "@/modules/Viewer/Events";
 import SkyBoxs from "@/modules/SkyBoxs";
-import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import {PointerLockControls} from 'three/addons/controls/PointerLockControls.js';
 import * as THREE from 'three'
+
 export default class Viewer {
     id = ''
     viewerDom = ''
@@ -23,15 +34,18 @@ export default class Viewer {
     skyboxs = null
     pointerLockControls = null
     isDefaultControls = true
-    constructor(id = '',isDefaultControls=true) {
+
+    constructor(id = '', isDefaultControls = true) {
         this.id = id
         this.isDefaultControls = isDefaultControls
         this.#initViewer()
     }
+
     addAxis() {
         const axis = new AxesHelper(5);
         this.scene?.add(axis);
     }
+
     addStats() {
         if (!this.statsControls) this.statsControls = new Stats();
         this.statsControls.dom.style.position = 'absolute';
@@ -43,22 +57,25 @@ export default class Viewer {
             content: this.statsControls,
         });
     }
+
     #statsUpdate(statsControls) {
         statsControls.update();
     }
+
     addAnimate(animate) {
         this.animateEventList.push(animate);
     }
-    initRaycaster(){
+
+    initRaycaster() {
         this.raycaster = new Raycaster()
         const initRaycasterEvent = (eventName) => {
             const funWrap = (event) => {
-                    this.mouseEvent = event;
-                    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                    this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
-                    // @ts-expect-error
-                    this.EventBus.emit(Events[eventName].raycaster, this.#getRaycasterIntersectObjects());
-                }
+                this.mouseEvent = event;
+                this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                // @ts-expect-error
+                this.EventBus.emit(Events[eventName].raycaster, this.#getRaycasterIntersectObjects());
+            }
             this.renderer.domElement.addEventListener(eventName, funWrap, false);
         };
 
@@ -66,14 +83,17 @@ export default class Viewer {
         initRaycasterEvent('dblclick');
         initRaycasterEvent('mousemove');
     }
-    setRaycasterObjects (objList) {
+
+    setRaycasterObjects(objList) {
         this.raycasterObjects.push(...objList);
     }
-    #getRaycasterIntersectObjects(){
+
+    #getRaycasterIntersectObjects() {
         if (!this.raycasterObjects.length) return [];
         this.raycaster.setFromCamera(this.mouse, this.camera);
         return this.raycaster.intersectObjects(this.raycasterObjects, true);
     }
+
     destroy() {
         this.scene.traverse((child) => {
             if (child.material) {
@@ -90,13 +110,14 @@ export default class Viewer {
 
         this.isDestroy = true;
     }
+
     #initViewer() {
         this.EventBus = new EventBus()
         this.#initRender()
         this.#initScene()
         this.#initLight()
         this.#initCamera()
-        if(this.isDefaultControls) this.#initControl();
+        if (this.isDefaultControls) this.#initControl();
         this.#initSkybox()
         this.raycaster = new Raycaster();
         this.mouse = new Vector2();
@@ -117,6 +138,7 @@ export default class Viewer {
 
         animate();
     }
+
     #initRender() {
         this.viewerDom = document.getElementById(this.id);
         // 初始化渲染器
@@ -133,17 +155,19 @@ export default class Viewer {
         this.renderer.shadowMap.enabled = true;
         this.viewerDom.appendChild(this.renderer.domElement);
     }
+
     #initScene() {
         this.scene = new Scene()
         // this.scene.background = new Color('#0C1B2E')
-        this.scene.fog = new THREE.Fog( 0xffffff, 0, 750 );
+        this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
     }
+
     #initLight() {
         const ambient = new AmbientLight(0xffffff, 0.6);
         this.scene.add(ambient);
 
-        const light = new THREE.DirectionalLight( 0xffffff,5 );
-        light.position.set( 0, 200, 100 );
+        const light = new THREE.DirectionalLight(0xffffff, 5);
+        light.position.set(0, 200, 100);
         light.castShadow = true;
 
         light.shadow.camera.top = 180;
@@ -157,28 +181,29 @@ export default class Viewer {
 
         this.scene.add(light);
 
-        const light2 = new THREE.PointLight( 0xff0000, 1);
+        const light2 = new THREE.PointLight(0xff0000, 1);
 
         light2.castShadow = true
         light2.shadow.radius = 20
-        light2.shadow.mapSize.set(512,512)
+        light2.shadow.mapSize.set(512, 512)
 
-        const sphere = new THREE.Mesh(
-            new THREE.SphereGeometry( 5, 30, 30 ),
-            new THREE.MeshBasicMaterial( {
-            // metalness:0.5,
-            // roughness:0,
-            color:0xff0000
+        const sphere = new THREE.Points(
+            new THREE.SphereGeometry(10, 30, 30),
+            new THREE.PointsMaterial({
+                // metalness:0.5,
+                // roughness:0,
+                color: 0xff0000,
+                size: 0.005
             })
         );
 
-        sphere.position.set(1,1,1)
+        sphere.position.set(1, 0.7, 1)
 
-        sphere.scale.set(0.01,0.01,0.01)
+        sphere.scale.set(0.01, 0.01, 0.01)
 
         sphere.add(light2)
 
-        this.scene.add( sphere );
+        // this.scene.add(sphere);
 
         const animateFn = {
             fun: () => {
@@ -190,9 +215,10 @@ export default class Viewer {
             content: this,
         };
 
-        this.addAnimate(animateFn)
+        // this.addAnimate(animateFn)
 
     }
+
     #initCamera() {
         // 渲染相机
         this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, undefined, 1000);
@@ -200,29 +226,34 @@ export default class Viewer {
         // const helper = new THREE.CameraHelper( this.camera );
         // this.scene.add( helper );
     }
+
     #initControl() {
         this.controls = new OrbitControls(this.camera, this.renderer?.domElement);
         this.controls.enableDamping = false;
         this.controls.screenSpacePanning = false; // 定义平移时如何平移相机的位置 控制不上下移动
         this.controls.minDistance = 0;
         this.controls.maxDistance = 1000;
-        this.controls.addEventListener('change', ()=>{
+        this.controls.addEventListener('change', () => {
             this.renderer.render(this.scene, this.camera);
         });
     }
+
     #initSkybox() {
         if (!this.skyboxs) this.skyboxs = new SkyBoxs(this);
         this.skyboxs.addSkybox('night');
         this.skyboxs.addFog();
     }
-    initPointerLockControls(){
+
+    initPointerLockControls() {
         this.pointerLockControls = new PointerLockControls(this.camera, this.renderer?.domElement)
         this.scene.add(this.pointerLockControls.getObject())
         return this.pointerLockControls
     }
+
     #readerDom() {
-        this.renderer?.render(this.scene,this.camera);
+        this.renderer?.render(this.scene, this.camera);
     }
+
     #updateDom() {
         this.controls?.update();
         // 更新参数
