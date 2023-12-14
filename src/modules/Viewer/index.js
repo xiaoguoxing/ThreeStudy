@@ -41,8 +41,8 @@ export default class Viewer {
         this.#initViewer()
     }
 
-    addAxis() {
-        const axis = new AxesHelper(5);
+    addAxis(size=5) {
+        const axis = new AxesHelper(size);
         this.scene?.add(axis);
     }
 
@@ -159,7 +159,7 @@ export default class Viewer {
     #initScene() {
         this.scene = new Scene()
         // this.scene.background = new Color('#0C1B2E')
-        this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
+        this.scene.fog = new THREE.Fog(0xffffff, 0, 10000);
     }
 
     #initLight() {

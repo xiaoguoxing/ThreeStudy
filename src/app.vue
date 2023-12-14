@@ -1,5 +1,5 @@
 <script setup>
-import index from './demo/index5.vue'
+import index from './demo/index6.vue'
 </script>
 
 <template>
