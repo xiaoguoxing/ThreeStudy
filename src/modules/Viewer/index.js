@@ -159,7 +159,7 @@ export default class Viewer {
     #initScene() {
         this.scene = new Scene()
         // this.scene.background = new Color('#0C1B2E')
-        this.scene.fog = new THREE.Fog(0xffffff, 0, 10000);
+        this.scene.fog = new THREE.Fog(0xffffff, 0, 750);
     }
 
     #initLight() {
@@ -180,7 +180,7 @@ export default class Viewer {
         light.shadow.mapSize.set(1024, 1024);
 
         this.scene.add(light);
-
+/*
         const light2 = new THREE.PointLight(0xff0000, 1);
 
         light2.castShadow = true
@@ -203,7 +203,7 @@ export default class Viewer {
 
         sphere.add(light2)
 
-        // this.scene.add(sphere);
+        this.scene.add(sphere);
 
         const animateFn = {
             fun: () => {
@@ -215,7 +215,7 @@ export default class Viewer {
             content: this,
         };
 
-        // this.addAnimate(animateFn)
+        this.addAnimate(animateFn)*/
 
     }
 

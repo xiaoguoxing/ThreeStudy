@@ -39,15 +39,11 @@ export default class SkyBoxs {
             path + 'posz' + format,
             path + 'negz' + format,
         ]);
-        /*const pmremGenerator = new THREE.PMREMGenerator(this.viewer.renderer); // 使用hdr作为背景色
-        pmremGenerator.compileEquirectangularShader();
-        const loaderbox = new RGBELoader();
-        loaderbox.setDataType(THREE.UnsignedByteType)
-        this.cubeTexture = loaderbox.loadAsync('/skybox/xingkong.jpg').then(res =>{
-            console.log(res);
-            this.viewer.scene.background =   pmremGenerator.fromEquirectangular(res).texture;
-            pmremGenerator.dispose();
-        });*/
+        // const loaderbox = new RGBELoader();
+        // this.cubeTexture = loaderbox.loadAsync('/xingkong.hdr').then(res =>{
+        //     res.mapping = THREE.EquirectangularReflectionMapping;
+        //     this.viewer.scene.background =   (res);
+        // });
 
         /*const a = new THREE.TextureLoader()
         let b = a.load('/skybox/xingkong.jpg')
@@ -58,6 +54,8 @@ export default class SkyBoxs {
         b.wrapT = THREE.ClampToEdgeWrapping;
         // 需要把色彩空间编码改一下
         this.viewer.scene.background = b;*/
+
+
         this.viewer.scene.background =  this.cubeTexture;
 
         // this.viewer.scene.environment  =  this.cubeTexture;
