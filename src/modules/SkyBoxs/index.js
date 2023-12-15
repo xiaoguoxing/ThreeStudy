@@ -56,7 +56,8 @@ export default class SkyBoxs {
         this.viewer.scene.background = b;*/
 
 
-        this.viewer.scene.background =  this.cubeTexture;
+        // this.viewer.scene.background =  this.cubeTexture;
+        this.viewer.scene.background =  new  THREE.Color('#000');
 
         // this.viewer.scene.environment  =  this.cubeTexture;
     }
