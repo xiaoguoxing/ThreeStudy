@@ -20,6 +20,7 @@ export default class Viewer {
     id = ''
     viewerDom = ''
     scene = null
+    clock = null
     renderer = null
     camera = null
     controls = null
@@ -34,10 +35,14 @@ export default class Viewer {
     skyboxs = null
     pointerLockControls = null
     isDefaultControls = true
+    isDefaultSceneBg = true
+    isDefaultLight = true
 
-    constructor(id = '', isDefaultControls = true) {
+    constructor(id = '', isDefaultControls = true,isDefaultSceneBg = true,isDefaultLight = true) {
         this.id = id
         this.isDefaultControls = isDefaultControls
+        this.isDefaultSceneBg = isDefaultSceneBg
+        this.isDefaultLight = isDefaultLight
         this.#initViewer()
     }
 
@@ -115,14 +120,14 @@ export default class Viewer {
         this.EventBus = new EventBus()
         this.#initRender()
         this.#initScene()
-        this.#initLight()
         this.#initCamera()
+        if (this.isDefaultLight) this.#initLight()
         if (this.isDefaultControls) this.#initControl();
-        this.#initSkybox()
+        if(this.isDefaultSceneBg) this.#initSkybox()
         this.raycaster = new Raycaster();
         this.mouse = new Vector2();
         this.clock = new THREE.Clock()
-        const animate = () => {
+        const animate = (now) => {
             if (this.isDestroy) return;
             requestAnimationFrame(animate);
             this.#updateDom();
@@ -131,7 +136,7 @@ export default class Viewer {
             this.animateEventList.forEach(event => {
                 // event.fun && event.content && event.fun(event.content);
                 if (event.fun && event.content) {
-                    event.fun(event.content);
+                    event.fun(event.content,now);
                 }
             });
         };
@@ -163,10 +168,10 @@ export default class Viewer {
     }
 
     #initLight() {
-        const ambient = new AmbientLight(0xffffff, 0.6);
+        const ambient = new AmbientLight(0xffffff, 0.7);
         this.scene.add(ambient);
 
-        const light = new THREE.DirectionalLight(0xffffff, 5);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 200, 100);
         light.castShadow = true;
 
@@ -180,7 +185,7 @@ export default class Viewer {
         light.shadow.mapSize.set(1024, 1024);
 
         this.scene.add(light);
-/*
+    /*
         const light2 = new THREE.PointLight(0xff0000, 1);
 
         light2.castShadow = true
@@ -217,6 +222,22 @@ export default class Viewer {
 
         this.addAnimate(animateFn)*/
 
+
+
+     /*   const light2 = new THREE.DirectionalLight(0x4af2d4, 0.3);
+        light2.position.set(-100, -10, -10);
+        this.scene.add(light2);
+
+        const light3 = new  THREE.DirectionalLight(0xff7e00, 0.2);
+        light3.position.set(100, -10, -20);
+        this.scene.add(light3);
+
+        const light4 = new  THREE.DirectionalLight(0xffffff, 0.2);
+        light4.position.set(50, 50, 20);
+        this.scene.add(light4);
+
+        const ambient = new AmbientLight(0xffffff, 0.7);
+        this.scene.add(ambient);*/
     }
 
     #initCamera() {

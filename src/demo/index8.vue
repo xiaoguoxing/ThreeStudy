@@ -5,13 +5,40 @@ import * as THREE from 'three'
 import {onMounted, ref} from "vue";
 import gsap from 'gsap'
 import Events from "@/modules/Viewer/Events";
+import {randBetween} from '@/utils'
+import {AmbientLight, Object3D} from "three";
 
 let viewer, modelLoader;
 let count = 100
-let timeClock = new THREE.Clock()
+let timeClock;
+const MODELS = [
+  {
+    url: 'bong',
+    scale: 0.5,
+  },
+  {
+    url: 'cbd',
+    scale: 0.7,
+  },
+  {
+    url: 'thc',
+    scale: 0.7,
+  },
+  {
+    url: 'molecule',
+    scale: 0.7,
+  },
+  {
+    url: 'flask',
+    scale: 0.5,
+  },
+  {
+    url: 'leaf',
+    scale: 0.3,
+  },
+];
 
 let texture = new THREE.TextureLoader()
-
 
 onMounted(() => {
   init()
@@ -19,7 +46,12 @@ onMounted(() => {
 })
 
 function init() {
-  viewer = new Viewer('three', false)
+  viewer = new Viewer('three', false,false,false)
+
+  initLight()
+
+  viewer.scene.background =  new  THREE.Color('#cbe0e0');
+
   modelLoader = new ModelLoader(viewer)
   viewer.camera.position.set(0, 0, 8);
   //设置相机方向
@@ -33,10 +65,21 @@ function init() {
     onMouseMove(list)
   })
 }
+function initLight(){
+  const ambient = new AmbientLight(0xffffff, 0.7);
+  viewer.scene.add(ambient);
+
+  const light2 = new THREE.DirectionalLight(0x4af2d4, 1);
+  light2.position.set(-100, -10, -10);
+  viewer.scene.add(light2);
+
+  const light4 = new  THREE.DirectionalLight(0xffffff, 3);
+  light4.position.set(50, 50, 20);
+  viewer.scene.add(light4);
+}
 
 function initModel() {
   modelLoader.loadModelToScene('/weedensenteret/plant2.glb', baseModel => {
-    console.log(baseModel);
     const model = baseModel.object;
     const plant = model.children[0];
     const stem = plant.getObjectByName('stem');
@@ -52,54 +95,91 @@ function initModel() {
       map: texture.load('/weedensenteret/stem-bud-texture.jpg'),
       color: 'white',
     });
-
     stem.material = budStemMaterial
     bud.material = budStemMaterial
-
     plant.scale.set(1300, 1300, 1300);
     plant.position.set(0, -2.5, 0);
-
-    viewer.addAnimate({
-      content: viewer,
-      fun() {
-        let a = timeClock.getDelta()
-        let event = viewer.mouse
-        model.rotation.y = -(event.x * 0.4);
-        model.rotation.x = -(event.y * 0.4);
-      }
-    })
   })
-}
 
-const planeAnimate = (texture) => {
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  const animateFn = {
-    fun: () => {
-      const count = texture.repeat.y;
-      if (count <= 10) {
-        texture.repeat.x += 0.01;
-        texture.repeat.y += 0.02;
-      } else {
-        texture.repeat.x = 0;
-        texture.repeat.y = 0;
-      }
-    },
-    content: viewer,
-  };
-  return animateFn;
-}
+  const mat = new THREE.MeshPhongMaterial({
+    color: 0xf7f7f7,
+    //envMap: this.envMap,
+    //reflectivity: 0.05,
+  });
+  let objects = []
+  for (const {url,scale} of MODELS) {
+    modelLoader.loadModelToScene(`/weedensenteret/${url}.glb`,urlModel=>{
+      let Scene = urlModel.object
+      const leafMesh = Scene.children[0];
+      leafMesh.material = mat;
+      leafMesh.scale.set(scale,scale, scale);
+      const obj = {
+        container:Scene,
+        vz: randBetween(-0.05, -0.05),
+        rx: randBetween(0, 0.01),
+        ry: randBetween(0, 0.01),
+        rz: randBetween(0, 0.01),
+      };
+      getRandomPosition(Scene.position,true,true)
+      objects.push(obj)
 
-function onMouseMove(list) {
-  // console.log(list);
-  let event = viewer.mouse
-  let model = list[0]?.object?.parent
-  if (model) {
-    // viewer.camera.position.set(event.x, event.y, 8);
-    // model.rotation.z = event.y
-    // model.rotation.x = event.x
-    // model.rotation.y = event.x
+      let clone = leafMesh.clone()
+      let cont2 = new Object3D()
+      cont2.add(clone)
+      const obj2 = {
+        container: cont2,
+        vz: randBetween(-0.05, -0.05),
+        rx: randBetween(0, 0.01),
+        ry: randBetween(0, 0.01),
+        rz: randBetween(0, 0.01),
+      };
+      getRandomPosition(cont2.position, false, true);
+      objects.push(obj2);
+      viewer.scene.add(cont2)
+    })
   }
+
+  viewer.addAnimate({
+    content:viewer,
+    fun(){
+      for (let obj of objects) {
+        const container = obj.container;
+        container.position.z += obj.vz;
+
+        container.rotation.x += obj.rx;
+        container.rotation.y += obj.ry;
+        container.rotation.z += obj.rz;
+
+        if (container.position.z < -16) container.position.z = viewer.camera.position.z;
+      }
+    }
+  })
+
+}
+
+function onMouseMove() {
+  let event = viewer.mouse
+  gsap.to(viewer.scene.rotation,{y:-(event.x * 0.2) ,delay:0.2})
+  gsap.to(viewer.scene.rotation,{x:-(event.y * 0.2),delay:0.2})
+}
+
+function getRandomPosition(pos, leftSide, randZ = false) {
+  let x;
+  let y = randBetween(-8, 8);
+
+  if (leftSide) {
+    x = randBetween(
+        -window.innerWidth * 0.006,
+        -Math.max(window.innerWidth * 0.003, 4)
+    );
+  } else {
+    x = randBetween(
+        window.innerWidth * 0.006,
+        Math.max(window.innerWidth * 0.002, 4)
+    );
+  }
+
+  pos.set(x, y, randZ ? randBetween(-10, viewer.camera.position.z) : pos.z);
 }
 
 </script>
