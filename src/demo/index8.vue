@@ -51,7 +51,7 @@ function init() {
   initLight()
 
   viewer.scene.background =  new  THREE.Color('#cbe0e0');
-
+  viewer.scene.fog = new THREE.Fog(0xcae0e0, 30, 35)
   modelLoader = new ModelLoader(viewer)
   viewer.camera.position.set(0, 0, 8);
   //设置相机方向
@@ -65,17 +65,22 @@ function init() {
     onMouseMove(list)
   })
 }
-function initLight(){
-  const ambient = new AmbientLight(0xffffff, 0.7);
-  viewer.scene.add(ambient);
 
-  const light2 = new THREE.DirectionalLight(0x4af2d4, 1);
-  light2.position.set(-100, -10, -10);
+function initLight(){
+  const light1 = new THREE.DirectionalLight(0x4af2d4, 0.7);
+  light1.position.set(-100, -10, -10);
+  viewer.scene.add(light1);
+
+  const light2 = new  THREE.DirectionalLight(0xff7e00, 0.7);
+  light2.position.set(100, -10, -20);
   viewer.scene.add(light2);
 
-  const light4 = new  THREE.DirectionalLight(0xffffff, 3);
-  light4.position.set(50, 50, 20);
-  viewer.scene.add(light4);
+  const light3 = new  THREE.DirectionalLight(0xffffff, 0.7);
+  light3.position.set(50, 50, 20);
+  viewer.scene.add(light3);
+
+  const ambient = new AmbientLight(0xffffff, 1.5);
+  viewer.scene.add(ambient);
 }
 
 function initModel() {
@@ -154,7 +159,7 @@ function initModel() {
       }
     }
   })
-
+  console.log(viewer.scene);
 }
 
 function onMouseMove() {
