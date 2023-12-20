@@ -185,59 +185,6 @@ export default class Viewer {
         light.shadow.mapSize.set(1024, 1024);
 
         this.scene.add(light);
-    /*
-        const light2 = new THREE.PointLight(0xff0000, 1);
-
-        light2.castShadow = true
-        light2.shadow.radius = 20
-        light2.shadow.mapSize.set(512, 512)
-
-        const sphere = new THREE.Points(
-            new THREE.SphereGeometry(10, 30, 30),
-            new THREE.PointsMaterial({
-                // metalness:0.5,
-                // roughness:0,
-                color: 0xff0000,
-                size: 0.005
-            })
-        );
-
-        sphere.position.set(1, 0.7, 1)
-
-        sphere.scale.set(0.01, 0.01, 0.01)
-
-        sphere.add(light2)
-
-        this.scene.add(sphere);
-
-        const animateFn = {
-            fun: () => {
-                let time = this.clock.getElapsedTime()
-                sphere.position.x = Math.sin(time) * 0.5
-                sphere.position.z = Math.cos(time) * 0.5
-                // sphere.position.y = 2+Math.sin(time * 2)
-            },
-            content: this,
-        };
-
-        this.addAnimate(animateFn)*/
-
-
-
-     /*   const light2 = new THREE.DirectionalLight(0x4af2d4, 0.3);
-        light2.position.set(-100, -10, -10);
-        this.scene.add(light2);
-
-        const light3 = new  THREE.DirectionalLight(0xff7e00, 0.2);
-        light3.position.set(100, -10, -20);
-        this.scene.add(light3);
-
-        const light4 = new  THREE.DirectionalLight(0xffffff, 0.2);
-        light4.position.set(50, 50, 20);
-        this.scene.add(light4);
-
-        const ambient = new AmbientLight(0xffffff, 0.7);
-        this.scene.add(ambient);*/
     }
 
     #initCamera() {

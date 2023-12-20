@@ -32,7 +32,7 @@ function init() {
   viewer.camera.lookAt(0, viewer.camera.position.y, 0);
 
   // new Floors(viewer)
-
+  initLight()
   modelLoader = new ModelLoader(viewer);
   boxHelperWrap = new BoxHelperWrap(viewer);
   // floors = new Floors(viewer);
@@ -92,6 +92,43 @@ function initModel() {
     const fnOnj = planeAnimate(texture);
     viewer.addAnimate(fnOnj);
   });
+}
+function initLight(){
+  const light2 = new THREE.PointLight(0xff0000, 1);
+
+  light2.castShadow = true
+  light2.shadow.radius = 20
+  light2.shadow.mapSize.set(512, 512)
+
+  const sphere = new THREE.Points(
+      new THREE.SphereGeometry(10, 30, 30),
+      new THREE.PointsMaterial({
+        // metalness:0.5,
+        // roughness:0,
+        color: 0xff0000,
+        size: 0.005
+      })
+  );
+
+  sphere.position.set(1, 0.7, 1)
+
+  sphere.scale.set(0.01, 0.01, 0.01)
+
+  sphere.add(light2)
+
+  viewer.scene.add(sphere);
+
+  const animateFn = {
+    fun: () => {
+      let time = viewer.clock.getElapsedTime()
+      sphere.position.x = Math.sin(time) * 0.5
+      sphere.position.z = Math.cos(time) * 0.5
+      // sphere.position.y = 2+Math.sin(time * 2)
+    },
+    content: viewer,
+  };
+
+  viewer.addAnimate(animateFn)
 }
 const planeAnimate = (texture) => {
   texture.wrapS = THREE.RepeatWrapping;
