@@ -28,5 +28,8 @@ export default {
   mousemove: {
     raycaster: 'mousemove:raycaster',
   },
+  wheel: {
+    raycaster: 'wheel:raycaster',
+  },
   resize: 'resize',
 };

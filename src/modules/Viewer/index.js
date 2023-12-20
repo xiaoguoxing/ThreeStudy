@@ -73,6 +73,7 @@ export default class Viewer {
 
     initRaycaster() {
         this.raycaster = new Raycaster()
+
         const initRaycasterEvent = (eventName) => {
             const funWrap = (event) => {
                 this.mouseEvent = event;
@@ -87,6 +88,7 @@ export default class Viewer {
         initRaycasterEvent('click');
         initRaycasterEvent('dblclick');
         initRaycasterEvent('mousemove');
+        initRaycasterEvent('wheel');
     }
 
     setRaycasterObjects(objList) {

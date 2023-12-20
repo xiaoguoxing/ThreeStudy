@@ -2,15 +2,13 @@
 import Viewer from '@/modules/Viewer'
 import ModelLoader from '@/modules/ModelLoader'
 import * as THREE from 'three'
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import gsap from 'gsap'
 import Events from "@/modules/Viewer/Events";
-import {randBetween} from '@/utils'
+import {randBetween, range,mouseWheel} from '@/utils'
 import {AmbientLight, Object3D} from "three";
 
 let viewer, modelLoader;
-let count = 100
-let timeClock;
 const MODELS = [
   {
     url: 'bong',
@@ -37,6 +35,8 @@ const MODELS = [
     scale: 0.3,
   },
 ];
+let scroll = 0
+let pageLength = 2
 
 let texture = new THREE.TextureLoader()
 
@@ -45,11 +45,13 @@ onMounted(() => {
   initModel()
 })
 
+onUnmounted(()=>{
+  document.removeEventListener('mousemove',onMouseMove)
+})
+
 function init() {
   viewer = new Viewer('three', false,false,false)
-
   initLight()
-
   viewer.scene.background =  new  THREE.Color('#cbe0e0');
   viewer.scene.fog = new THREE.Fog(0xcae0e0, 30, 35)
   modelLoader = new ModelLoader(viewer)
@@ -60,14 +62,15 @@ function init() {
   // viewer.camera.far = 15/2
   viewer.initRaycaster();
   // viewer.addAxis()
-  viewer.EventBus.on(Events.mousemove.raycaster, (list) => {
-    // console.log(list);
-    onMouseMove(list)
+  document.addEventListener('mousemove',onMouseMove)
+  // document.addEventListener('wheel',onMouseWheel)
+  mouseWheel(document,(x,y)=>{
+    onMouseWheel(y);
   })
 }
 
 function initLight(){
-  const light1 = new THREE.DirectionalLight(0x4af2d4, 0.7);
+  const light1 = new THREE.DirectionalLight(0x4af2d4, 1);
   light1.position.set(-100, -10, -10);
   viewer.scene.add(light1);
 
@@ -79,12 +82,36 @@ function initLight(){
   light3.position.set(50, 50, 20);
   viewer.scene.add(light3);
 
-  const ambient = new AmbientLight(0xffffff, 1.5);
+  const ambient = new AmbientLight(0xffffff, 1.8);
   viewer.scene.add(ambient);
 }
 
 function initModel() {
+
+  modelLoader.loadModelToScene('/weedensenteret/brain.glb', baseModel => {
+    const scene = baseModel.object;
+    const brainMesh = scene.children[0];
+    const left = brainMesh.getObjectByName('brain_left001');
+    const right = brainMesh.getObjectByName('brain_right001');
+    left.material = new THREE.MeshLambertMaterial({
+      map: texture.load('/weedensenteret/brain-left-texture2.jpg'),
+      color: new THREE.Color(0xf7f7f7),
+    });
+    right.material = new THREE.MeshPhongMaterial({
+      color: new THREE.Color(0xf7f7f7),
+      map: texture.load('/weedensenteret/brain-left-texture2.jpg'),
+    });
+    left.position.x = 0.0001;
+    brainMesh.scale.set(
+        Math.min(window.innerHeight * 0.23, 270),
+        Math.min(window.innerHeight * 0.23, 270),
+        Math.min(window.innerHeight * 0.23, 270)
+    )
+    baseModel.openCastShadow();
+  })
+
   modelLoader.loadModelToScene('/weedensenteret/plant2.glb', baseModel => {
+    baseModel.openCastShadow();
     const model = baseModel.object;
     const plant = model.children[0];
     const stem = plant.getObjectByName('stem');
@@ -103,8 +130,9 @@ function initModel() {
     stem.material = budStemMaterial
     bud.material = budStemMaterial
     plant.scale.set(1300, 1300, 1300);
-    plant.position.set(0, -2.5, 0);
+    plant.position.set(0, -12.5, 0);
   })
+
 
   const mat = new THREE.MeshPhongMaterial({
     color: 0xf7f7f7,
@@ -114,6 +142,7 @@ function initModel() {
   let objects = []
   for (const {url,scale} of MODELS) {
     modelLoader.loadModelToScene(`/weedensenteret/${url}.glb`,urlModel=>{
+      urlModel.openCastShadow();
       let Scene = urlModel.object
       const leafMesh = Scene.children[0];
       leafMesh.material = mat;
@@ -161,10 +190,12 @@ function initModel() {
   })
 }
 
-function onMouseMove() {
-  let event = viewer.mouse
-  gsap.to(viewer.scene.rotation,{y:-(event.x * 0.2) ,delay:0.2})
-  gsap.to(viewer.scene.rotation,{x:-(event.y * 0.2),delay:0.2})
+function onMouseMove(event) {
+  let mouse = new THREE.Vector2()
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  gsap.to(viewer.scene.rotation,{y:-(mouse.x * 0.2) ,delay:0.2})
+  gsap.to(viewer.scene.rotation,{x:-(mouse.y * 0.2),delay:0.2})
 }
 
 function getRandomPosition(pos, leftSide, randZ = false) {
@@ -186,18 +217,41 @@ function getRandomPosition(pos, leftSide, randZ = false) {
   pos.set(x, y, randZ ? randBetween(-10, viewer.camera.position.z) : pos.z);
 }
 
+function onMouseWheel(e){
+  scroll += e
+  scroll = range(scroll,0,(innerHeight*pageLength) - innerHeight)
+  console.log(Math.round(scroll/innerHeight));
+  gsap.to(viewer.camera.position,{y:-(scroll/innerHeight)*10,direction:3})
+
+
+
+}
+
 </script>
+
 <template>
-  <div class="page page1"></div>
-  <div class="page page2"></div>
-  <div class="page page3"></div>
   <div id="three"></div>
+<!--  <div class="content">
+    <div class="page page1">1</div>
+    <div class="page page2">2</div>
+  </div>-->
 </template>
+
 <style scoped>
 #three {
-  position: relative;
+  position: fixed;
   width: 100vw;
   height: 100vh;
-
+}
+.content{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.page{
+  width: 100vw;
+  height: 100vh;
 }
 </style>

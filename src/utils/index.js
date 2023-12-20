@@ -316,3 +316,7 @@ export function debounce(func, wait, immediate) {
   };
 }
 
+export function range(num, min, max) {
+  return Math.min(Math.max(num, min), max);
+}
+
