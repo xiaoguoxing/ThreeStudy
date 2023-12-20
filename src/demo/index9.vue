@@ -70,19 +70,19 @@ function init() {
 }
 
 function initLight(){
-  const light1 = new THREE.DirectionalLight(0x4af2d4, 1);
+  const light1 = new THREE.DirectionalLight(0x4af2d4, 1.2);
   light1.position.set(-100, -10, -10);
   viewer.scene.add(light1);
 
-  const light2 = new  THREE.DirectionalLight(0xff7e00, 0.5);
+  const light2 = new  THREE.DirectionalLight(0xff7e00, 1.2);
   light2.position.set(100, -10, -20);
   viewer.scene.add(light2);
 
-  const light3 = new  THREE.DirectionalLight(0xffffff, 0.8);
+  const light3 = new  THREE.DirectionalLight(0xffffff, 1.4);
   light3.position.set(50, 50, 20);
   viewer.scene.add(light3);
 
-  const ambient = new AmbientLight(0xffffff, 1.8);
+  const ambient = new AmbientLight(0xffffff, 1.5);
   viewer.scene.add(ambient);
 }
 
@@ -93,19 +93,21 @@ function initModel() {
     const brainMesh = scene.children[0];
     const left = brainMesh.getObjectByName('brain_left001');
     const right = brainMesh.getObjectByName('brain_right001');
+    let textureBrain = texture.load('/weedensenteret/brain-left-texture2.jpg')
+    textureBrain.colorSpace = THREE.SRGBColorSpace
     left.material = new THREE.MeshLambertMaterial({
-      map: texture.load('/weedensenteret/brain-left-texture2.jpg'),
+      map:textureBrain ,
       color: new THREE.Color(0xf7f7f7),
     });
     right.material = new THREE.MeshPhongMaterial({
       color: new THREE.Color(0xf7f7f7),
-      map: texture.load('/weedensenteret/brain-left-texture2.jpg'),
+      map: textureBrain,
     });
     left.position.x = 0.0001;
     brainMesh.scale.set(
-        Math.min(window.innerHeight * 0.23, 270),
-        Math.min(window.innerHeight * 0.23, 270),
-        Math.min(window.innerHeight * 0.23, 270)
+        Math.min(window.innerHeight * 0.22, 270),
+        Math.min(window.innerHeight * 0.22, 270),
+        Math.min(window.innerHeight * 0.22, 270)
     )
     baseModel.openCastShadow();
   })
@@ -117,14 +119,23 @@ function initModel() {
     const stem = plant.getObjectByName('stem');
     const bud = plant.getObjectByName('bud');
     const leaf = plant.getObjectByName('leaf_combined');
+
+
+    let leafTexture = texture.load('/weedensenteret/plant-texture.jpg')
+    leafTexture.colorSpace = THREE.SRGBColorSpace
+    let leafAlphaTexture = texture.load('/weedensenteret/plant-alpha.png')
+    leafAlphaTexture.colorSpace = THREE.SRGBColorSpace
     leaf.material = new THREE.MeshBasicMaterial({
-      map: texture.load('/weedensenteret/plant-texture.jpg'),
+      map: leafTexture,
       color: 'white',
-      alphaMap: texture.load('/weedensenteret/plant-alpha.png'),
+      alphaMap:leafAlphaTexture ,
       alphaTest: 0.9,
     });
+
+    let stemBugTexture = texture.load('/weedensenteret/stem-bud-texture.jpg')
+    stemBugTexture.colorSpace = THREE.SRGBColorSpace
     const budStemMaterial = new THREE.MeshBasicMaterial({
-      map: texture.load('/weedensenteret/stem-bud-texture.jpg'),
+      map: stemBugTexture,
       color: 'white',
     });
     stem.material = budStemMaterial

@@ -160,6 +160,7 @@ export default class Viewer {
         });
         this.renderer.clearDepth();
         this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.viewerDom.appendChild(this.renderer.domElement);
     }
 
