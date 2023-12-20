@@ -220,11 +220,8 @@ function getRandomPosition(pos, leftSide, randZ = false) {
 function onMouseWheel(e){
   scroll += e
   scroll = range(scroll,0,(innerHeight*pageLength) - innerHeight)
-  console.log(Math.round(scroll/innerHeight));
+  let current = Math.round(scroll/innerHeight)
   gsap.to(viewer.camera.position,{y:-(scroll/innerHeight)*10,direction:3})
-
-
-
 }
 
 </script>
