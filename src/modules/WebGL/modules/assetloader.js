@@ -62,9 +62,8 @@ class AssetLoader {
                 this.load();
                 break;
         }
-
         // set progress
-        const numLoaded = this.numItems - this.loadQueue.length - 1;
+        const numLoaded = this.numItems - this.loadQueue.length -1;
         this.onProgress(numLoaded / this.numItems);
     }
 

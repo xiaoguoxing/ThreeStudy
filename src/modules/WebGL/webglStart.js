@@ -16,7 +16,7 @@ import WebGL from './modules/index';
 
 export default function (dom) {
     const onProgress = (p) => {
-        console.log(Math.round(p * 100))
+        // console.log(Math.round(p * 100))
     };
     const onComplete = () => {
         // avoid jank
@@ -27,8 +27,6 @@ export default function (dom) {
         // new WebGL()
         console.log('完成');
     };
-
-    // initial renderer to get the correct color
     renderer.render(scene, camera);
     dom.appendChild(renderer.domElement)
     assetList.loadAll(renderer, onProgress, onComplete);

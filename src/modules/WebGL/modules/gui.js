@@ -26,7 +26,6 @@ class GUI {
 
     add(obj, prop, options = {}, folder) {
         const p = folder || this.pane;
-        console.log(p);
         return p.addBinding(obj, prop, options);
     }
 
