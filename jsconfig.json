@@ -10,6 +10,9 @@
       ],
       "@static/*": [
         "public/*"
+      ],
+      "@webGL/*": [
+        "src/WebGL/*"
       ]
     },
     "lib": [

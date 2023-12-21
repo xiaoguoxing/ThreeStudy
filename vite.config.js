@@ -9,8 +9,11 @@ export default defineConfig({
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),
+            '@static': fileURLToPath(new URL('public', import.meta.url)),
+            '@webGL': fileURLToPath(new URL('./src/WebGL', import.meta.url)),
         },
     },
     base: './',
     plugins: [vue()],
+    assetsInclude:['**/*.glb']
 });

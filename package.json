@@ -24,6 +24,8 @@
     "lodash-es": "^4.17.21",
     "three": "^0.158.0",
     "to-px": "^1.1.0",
+    "touches": "^1.2.2",
+    "tweakpane": "^4.0.2",
     "vue": "^3.3.9"
   },
   "devDependencies": {
