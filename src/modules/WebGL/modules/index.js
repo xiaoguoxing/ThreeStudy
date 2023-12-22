@@ -26,7 +26,6 @@ import './gui';
 export default class App extends component() {
     init() {
         this.composer = new EffectComposer(renderer);
-
         const renderPass = new RenderPass(scene, camera);
         this.composer.addPass(renderPass);
 

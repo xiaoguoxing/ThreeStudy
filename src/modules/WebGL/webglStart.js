@@ -24,7 +24,7 @@ export default function (dom) {
         //     controller.register(sections);
         //     new WebGL();
         // });
-        // new WebGL()
+        new WebGL()
         console.log('完成');
     };
     renderer.render(scene, camera);

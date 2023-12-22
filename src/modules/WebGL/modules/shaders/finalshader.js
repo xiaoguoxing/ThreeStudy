@@ -1,5 +1,4 @@
 import { Vector2 } from 'three';
-
 import vertexShader from './final.vs?raw';
 import fragmentShader from './final.fs?raw';
 
@@ -8,8 +7,8 @@ const FinalShader = {
         tDiffuse: { value: null },
         uResolution: { value: new Vector2() },
     },
-    vertexShader,
-    fragmentShader,
+    vertexShader:vertexShader,
+    fragmentShader:fragmentShader,
     defines: {
         FXAA: true,
     },

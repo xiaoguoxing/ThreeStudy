@@ -7,10 +7,10 @@ uniform bool enabled;
 
 varying vec2 vUv;
 
-#define PI 3.141592
+#define PI 3.141592;
 
 // #pragma glslify: cnoise2 = require(glsl-noise)
-#pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
+#pragma glslify: snoise2 = require(glsl-noise/simplex/2d);
 // #pragma glslify: snoise3 = require(glsl-noise/simplex/3d)
 // #pragma glslify: snoise4 = require(glsl-noise/simplex/4d)
 // #pragma glslify: cnoise2 = require(glsl-noise/classic/2d)
@@ -19,7 +19,6 @@ varying vec2 vUv;
 // #pragma glslify: pnoise2 = require(glsl-noise/periodic/2d)
 // #pragma glslify: pnoise3 = require(glsl-noise/periodic/3d)
 // #pragma glslify: pnoise4 = require(glsl-noise/periodic/4d)
-
 void main() {
 
   vec2 uv = vUv;

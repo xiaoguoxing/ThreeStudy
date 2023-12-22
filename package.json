@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "threeJS学习",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite"
@@ -20,6 +21,8 @@
   "homepage": "https://github.com/xiaoguoxing/ThreeStudy#readme",
   "dependencies": {
     "dat.gui": "^0.7.9",
+    "glsl-fxaa": "^3.0.0",
+    "glsl-noise": "0.0.0",
     "gsap": "^3.12.2",
     "lodash-es": "^4.17.21",
     "three": "^0.158.0",
@@ -30,6 +33,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
-    "vite": "^4.5.0"
+    "vite": "^4.5.0",
+    "vite-plugin-glslify": "^2.0.2"
   }
 }

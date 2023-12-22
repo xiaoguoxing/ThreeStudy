@@ -1,6 +1,8 @@
 import {defineConfig} from 'vite'
 import { fileURLToPath, URL } from 'node:url';
-import vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue';
+import {glslify} from 'vite-plugin-glslify'
+
 export default defineConfig({
     server:{
         host:'0.0.0.0',
@@ -13,6 +15,6 @@ export default defineConfig({
         },
     },
     base: './',
-    plugins: [vue()],
+    plugins: [vue(),glslify()],
     assetsInclude:['**/*.glb']
 });
