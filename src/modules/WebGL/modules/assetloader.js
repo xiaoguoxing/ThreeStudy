@@ -1,7 +1,7 @@
-import { TextureLoader, ImageLoader, CubeTextureLoader } from 'three';
+import {TextureLoader, ImageLoader, CubeTextureLoader, ObjectLoader} from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
-
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 const noop = () => {};
 
 const gltfLoader = new GLTFLoader();
@@ -12,7 +12,8 @@ gltfLoader.setDRACOLoader(dracoLoader);
 const textureLoader = new TextureLoader();
 const imageLoader = new ImageLoader();
 const cubeTextureLoader = new CubeTextureLoader();
-
+const objectLoader = new ObjectLoader();
+const Objloader = new OBJLoader();
 class AssetLoader {
     constructor() {
         this.loadQueue = [];
@@ -44,19 +45,21 @@ class AssetLoader {
             case 'gltf':
                 this.loadGLTF(item, this.loadComplete);
                 break;
-
+            case 'json':
+                this.loadJSON(item, this.loadComplete);
+                break;
+            case 'obj':
+                this.loadOBJ(item, this.loadComplete);
+                break;
             case 'texture':
                 this.loadTexture(item, this.loadComplete);
                 break;
-
             case 'image':
                 this.loadImage(item, this.loadComplete);
                 break;
-
             case 'cubetexture':
                 this.loadCubeTexture(item, this.loadComplete);
                 break;
-
             default:
                 console.warn(`Incorrect asset type for ${item.url}`);
                 this.load();
@@ -85,7 +88,32 @@ class AssetLoader {
             },
             () => {},
             (err) => {
-                done(err);
+                done(err,item);
+            }
+        );
+    }
+
+    loadJSON(item, done) {
+        objectLoader.load(
+            item.url,
+            (data) => {
+                done(null, item, data);
+            },
+            () => {},
+            (err) => {
+                done(err,item);
+            }
+        );
+    }
+    loadOBJ(item, done) {
+        Objloader.load(
+            item.url,
+            (data) => {
+                done(null, item, data);
+            },
+            () => {},
+            (err) => {
+                done(err,item);
             }
         );
     }
