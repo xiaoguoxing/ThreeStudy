@@ -1,5 +1,5 @@
 <script setup>
-import renderer from '@/modules/WebGL/webglStart'
+import renderer from '@/modules/WebGL/run'
 import {onMounted, ref} from "vue";
 let three = ref(null)
 onMounted(()=>{

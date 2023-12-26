@@ -10,7 +10,7 @@
 import renderer from './modules/renderer';
 import scene from './modules/scene';
 import camera from './modules/camera';
-import * as assetList from './modules/assetlist';
+import * as assetList from './assetlist.js';
 import WebGL from './modules/index';
 
 
@@ -19,7 +19,7 @@ export default function (dom) {
         // console.log(Math.round(p * 100))
     };
     const onComplete = () => {
-        // avoid jank
+        //
         // loader.complete(() => {
         //     controller.register(sections);
         //     new WebGL();

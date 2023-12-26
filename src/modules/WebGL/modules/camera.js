@@ -2,7 +2,6 @@ import { PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 import { component } from './dispatcher';
-import renderer from './renderer';
 import settings from './settings';
 import gui from './gui';
 

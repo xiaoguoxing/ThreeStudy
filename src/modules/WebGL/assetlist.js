@@ -1,6 +1,6 @@
 // import { RepeatWrapping, MirroredRepeatWrapping } from 'three';
 
-import assets from './assetloader';
+import assets from './assetloader.js';
 
 // models
 

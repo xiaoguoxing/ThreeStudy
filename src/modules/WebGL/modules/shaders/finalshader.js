@@ -7,8 +7,8 @@ const FinalShader = {
         tDiffuse: { value: null },
         uResolution: { value: new Vector2() },
     },
-    vertexShader:vertexShader,
-    fragmentShader:fragmentShader,
+    vertexShader,
+    fragmentShader,
     defines: {
         FXAA: true,
     },
