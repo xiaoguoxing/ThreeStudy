@@ -1,31 +1,24 @@
-/**
- * This file is part of the Helsedirektoratet Cannabis 2020 application.
- *
- * (c) APT AS
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 import renderer from './modules/renderer';
 import scene from './modules/scene';
 import camera from './modules/camera';
 import * as assetList from './assetlist.js';
-import WebGL from './modules/index';
+import WebGL from "./modules/index.js";
+import loader from "@/modules/WebGL/loader.js";
+import controller from "@/modules/WebGL/controller.js";
 
 
-export default function (dom) {
+export default function (dom,processDom, Progress = () => {},Complete=()=>{}) {
+    loader.init(processDom)
+    controller.init(document.querySelector('.container'))
     const onProgress = (p) => {
-        // console.log(Math.round(p * 100))
+        const percent = Math.round(p * 100);
+        Progress(percent)
     };
     const onComplete = () => {
-        //
-        // loader.complete(() => {
-        //     controller.register(sections);
-        //     new WebGL();
-        // });
-        new WebGL()
-        console.log('完成');
+        loader.complete(() => {
+            Complete()
+            new WebGL();
+        });
     };
     renderer.render(scene, camera);
     dom.appendChild(renderer.domElement)

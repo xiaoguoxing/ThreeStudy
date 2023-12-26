@@ -38,14 +38,6 @@ class Controller {
 
         this.easing = this.isTouch ? 0.05 : 0.1;
 
-        this.container = new Object3D();
-        scene.add(this.container);
-
-        // mousewheel
-        mouseWheel(document.querySelector('.content'), (dx, dy) => {
-            this.addScroll(dy);
-        });
-
         // touch drag controls
         if (this.isTouch) {
             dispatcher.on('pointerDrag', ({ pointer, evt }) => {
@@ -87,12 +79,22 @@ class Controller {
         });
 
         // start btn
-        document.querySelector('button.start-btn').addEventListener('click', () => {
-            this.scrollPos = window.innerHeight * 0.5;
-        });
+        // document.querySelector('button.start-btn').addEventListener('click', () => {
+        //     this.scrollPos = window.innerHeight * 0.5;
+        // });
 
         // resize
         dispatcher.on('resize', this.onResize);
+    }
+
+    init(dom){
+        this.container = new Object3D();
+        this.container.name = 'container'
+        scene.add(this.container);
+        // mousewheel
+        mouseWheel(dom, (dx, dy) => {
+            this.addScroll(dy);
+        });
     }
 
     activateTHC() {
@@ -222,9 +224,9 @@ class Controller {
             if (closestInstance) {
                 closestInstance.changeTheme();
                 // track closest section
-                track.event(`Show_${closestInstance.name}`);
+                // track.event(`Show_${closestInstance.name}`);
             }
-            sideNav.toggleActive(closest);
+            // sideNav.toggleActive(closest);
             this.closest = closest;
         }
 
@@ -280,4 +282,4 @@ class Controller {
     }
 }
 
-export default new Controller();
+export default new  Controller();
