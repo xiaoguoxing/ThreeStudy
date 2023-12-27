@@ -1,0 +1,175 @@
+import {Object3D, MeshLambertMaterial, MeshPhongMaterial, Color, Group} from 'three';
+import gsap from 'gsap';
+
+import BaseInstance from './baseinstance';
+
+import pointer from '../pointer';
+import assets from '../../assetloader';
+import { randBetween } from '@/utils';
+import camera from '../camera';
+import settings from "@/modules/WebGL/modules/settings.js";
+
+const {BASEPATH} = settings
+
+
+const MODELS = [
+    {
+        url: `${BASEPATH}bong.glb`,
+        scale: 0.5,
+    },
+    {
+        url: `${BASEPATH}cbd.glb`,
+        scale: 0.7,
+    },
+    {
+        url: `${BASEPATH}thc.glb`,
+        scale: 0.7,
+    },
+    {
+        url: `${BASEPATH}molecule.glb`,
+        scale: 0.7,
+    },
+    {
+        url: `${BASEPATH}flask.glb`,
+        scale: 0.5,
+    },
+    {
+        url: `${BASEPATH}leaf.glb`,
+        scale: 0.3,
+    },
+];
+
+export default class Frontpage extends BaseInstance {
+    constructor(opts) {
+        super(opts);
+    }
+
+    init() {
+        // this.envMap = assets.get('envmap');
+
+        const matUserData = {
+            myRandomFloat: { value: 0.05 },
+        };
+        const matLeft = new MeshLambertMaterial({
+
+            color: new Color(0xf7f7f7),
+            map: assets.get(`${BASEPATH}brain-left-texture2.jpg`),
+        });
+
+        matLeft.userData = matUserData;
+
+
+        const matRight = new MeshPhongMaterial({
+            //envMap: this.envMap,
+            //reflectivity: 0,
+            color: new Color(0xf7f7f7),
+            map: assets.get(`${BASEPATH}brain-left-texture2.jpg`),
+        });
+
+        matRight.userData = matUserData;
+
+
+        this.brainContainer = assets.get(`${BASEPATH}brain.glb`).scene.children[0];
+        const left = this.brainContainer.getObjectByName('brain_left001');
+        const right = this.brainContainer.getObjectByName('brain_right001');
+
+        left.material = matLeft;
+        right.material = matRight;
+
+        left.position.x = 0.0001;
+        this.brainContainer.scale.set(
+            Math.min(window.innerHeight * 0.3, 270),
+            Math.min(window.innerHeight * 0.3, 270),
+            Math.min(window.innerHeight * 0.3, 270)
+        );
+        this.brainContainer.position.y = 1;
+
+        this.objContainer = new Group();
+
+        this.add(this.brainContainer);
+
+        this.createObjects();
+    }
+
+    getRandomPosition(pos, leftSide, randZ = false) {
+        let x;
+        let y = randBetween(-8, 8);
+
+        if (leftSide) {
+            x = randBetween(
+                -window.innerWidth * 0.006,
+                -Math.max(window.innerWidth * 0.003, 4)
+            );
+        } else {
+            x = randBetween(
+                window.innerWidth * 0.006,
+                Math.max(window.innerWidth * 0.002, 4)
+            );
+        }
+
+        pos.set(x, y, randZ ? randBetween(-10, camera.position.z) : pos.z);
+    }
+
+    createObjects() {
+        this.objects = [];
+
+        this.add(this.objContainer);
+        const mat = new MeshPhongMaterial({
+            color: 0xf7f7f7,
+            //envMap: this.envMap,
+            //reflectivity: 0.05,
+        });
+
+        for (let model of MODELS) {
+            const { url, scale } = model;
+            const container = assets.get(url).scene;
+            const mesh = assets.get(url).scene.children[0];
+            const obj = {
+                container,
+                vz: randBetween(-0.05, -0.05),
+                rx: randBetween(0, 0.01),
+                ry: randBetween(0, 0.01),
+                rz: randBetween(0, 0.01),
+            };
+            mesh.scale.set(scale, scale, scale);
+            mesh.material = mat;
+            this.getRandomPosition(container.position, true, true);
+            this.objContainer.add(container);
+            this.objects.push(obj);
+
+            const clone = mesh.clone();
+            const cont2 = new Object3D();
+            cont2.add(clone);
+            const obj2 = {
+                container: cont2,
+                vz: randBetween(-0.05, -0.05),
+                rx: randBetween(0, 0.01),
+                ry: randBetween(0, 0.01),
+                rz: randBetween(0, 0.01),
+            };
+            this.getRandomPosition(cont2.position, false, true);
+            this.objects.push(obj2);
+            this.objContainer.add(cont2);
+        }
+    }
+
+    onRaf() {
+        // if (!this.active) return;
+        this.brainContainer.rotation.x = -pointer.normEased.y * 0.3;
+        this.brainContainer.rotation.y = -pointer.normEased.x * 0.3;
+
+        this.objContainer.rotation.y = -pointer.normEased.x * 0.35;
+        this.objContainer.position.x = -pointer.normEased.x * 3;
+
+        for (let obj of this.objects) {
+            const container = obj.container;
+            container.position.z += obj.vz;
+
+            container.rotation.x += obj.rx;
+            container.rotation.y += obj.ry;
+            container.rotation.z += obj.rz;
+
+            if (container.position.z < -16) container.position.z = camera.position.z;
+        }
+    }
+}

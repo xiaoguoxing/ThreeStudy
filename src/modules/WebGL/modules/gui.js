@@ -6,6 +6,7 @@ class GUI {
         this.colors = {};
         this.pane = new Pane();
         this.pane.element.style.display = settings.SHOW_GUI ? 'visible' : 'none';
+        this.pane.containerElem_.style.zIndex = '3';
 
         window.addEventListener('keydown', (evt) => {
             const key = evt.keyCode;

@@ -10,6 +10,7 @@ export default {
     ENABLE_CONTROLS: false,
     CLEAR_COLOR: new Color('#cbe0e0'),
     DPR: Math.min(window.devicePixelRatio || 1, MAX_DPR),
+    BASEPATH: '/weedensenteret/',
     SHOW_GUI: false,
     THEMES: {
         dark: new Color('#11202c'),

@@ -1,6 +1,8 @@
 import { WebGLRenderer, PCFSoftShadowMap } from 'three';
 import { component } from './dispatcher';
 import settings from './settings';
+import scene from "@/modules/WebGL/modules/scene.js";
+import camera from "@/modules/WebGL/modules/camera.js";
 
 class Renderer extends component(WebGLRenderer) {
     constructor() {
@@ -13,8 +15,17 @@ class Renderer extends component(WebGLRenderer) {
         this.shadowMap.type = PCFSoftShadowMap;
     }
 
-    onResize({ width, height }) {
+    renderDom(dom){
+        dom.appendChild(this.domElement)
+    }
+
+    onResize({ width, height ,ratio}) {
         this.setSize(width, height);
+        this.setPixelRatio(ratio);
+    }
+
+    onRaf() {
+        this.render(scene, camera);
     }
 }
 

@@ -1,11 +1,11 @@
 
-import { Vector2 } from 'three';
-import gsap from 'gsap';
+// import { Vector2 } from 'three';
+// import gsap from 'gsap';
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+// import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+// import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 // import { RGBShift } from './shaders/rgbshift';
 // import { FinalShader } from './shaders/finalshader';
 
@@ -64,7 +64,7 @@ export default class App extends component() {
     }
 
     onRaf({ elapsed }) {
-        // pointer.update();
+        pointer.update();
         // controller.update();
         // this.shiftPass.uniforms.uTime.value = elapsed;
         // this.composer.render();

@@ -5,11 +5,11 @@ import * as assetList from './assetlist.js';
 import WebGL from "./modules/index.js";
 import loader from "@/modules/WebGL/loader.js";
 import controller from "@/modules/WebGL/controller.js";
-
+import sections from "@/modules/WebGL/sections.js";
 
 export default function (dom,processDom, Progress = () => {},Complete=()=>{}) {
+    renderer.renderDom(dom)
     loader.init(processDom)
-    controller.init(document.querySelector('.container'))
     const onProgress = (p) => {
         const percent = Math.round(p * 100);
         Progress(percent)
@@ -17,10 +17,10 @@ export default function (dom,processDom, Progress = () => {},Complete=()=>{}) {
     const onComplete = () => {
         loader.complete(() => {
             Complete()
+            controller.register(sections)
             new WebGL();
         });
     };
-    renderer.render(scene, camera);
-    dom.appendChild(renderer.domElement)
+
     assetList.loadAll(renderer, onProgress, onComplete);
 }
