@@ -220,7 +220,7 @@ export default class Frontpage extends BaseInstance {
             this.objects.push(obj);
 
             const clone = mesh.clone();
-            const cont2 = new Object3D();
+            const cont2 = new Group();
             cont2.add(clone);
             const obj2 = {
                 container: cont2,

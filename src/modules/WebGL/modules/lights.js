@@ -6,7 +6,7 @@ import gui from './gui';
 class Lights extends component() {
     init() {
         //blue
-        this.light = new DirectionalLight(0x4af2d4, 0.3);
+        this.light = new DirectionalLight(0x4af2d4, 1.3);
         this.light.position.set(-50, -10, -10);
         scene.add(this.light);
 
@@ -19,11 +19,11 @@ class Lights extends component() {
         //this.light.shadow.mapSize.height = 2048;
 
         //yellow
-        this.light2 = new DirectionalLight(0xff7e00, 0.2);
+        this.light2 = new DirectionalLight(0xff7e00, 1.2);
         this.light2.position.set(50, -10, -20);
         scene.add(this.light2);
 
-        this.light3 = new DirectionalLight(0xffffff, 0.2);
+        this.light3 = new DirectionalLight(0xffffff, 1.2);
         this.light3.position.set(50, 50, 20);
         scene.add(this.light3);
 
@@ -35,7 +35,7 @@ class Lights extends component() {
         // this.light2.shadow.mapSize.width = 2048;
         // this.light2.shadow.mapSize.height = 2048;
 
-        this.ambient = new AmbientLight(0xffffff, 0.7);
+        this.ambient = new AmbientLight(0xffffff, 1.2);
         scene.add(this.ambient);
 
         const folder = gui.folder({ title: 'Lights' });

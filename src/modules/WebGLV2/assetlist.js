@@ -1,10 +1,10 @@
-// import { RepeatWrapping, MirroredRepeatWrapping } from 'three';
 
+
+import assets from './assetloader';
+import settings from './modules/settings'
 import {SRGBColorSpace} from "three";
-import assets from './assetloader.js';
-import settings from './modules/settings.js'
-const {BASEPATH} = settings
 
+const {BASEPATH} = settings
 
 const manifest = [
     {

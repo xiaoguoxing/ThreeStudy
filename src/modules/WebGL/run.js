@@ -1,6 +1,6 @@
-import renderer from './modules/renderer';
 import * as assetList from './assetlist.js';
 import WebGL from "./modules/index.js";
+import renderer from './modules/renderer';
 import loader from "@/modules/WebGL/loader.js";
 import controller from "@/modules/WebGL/controller.js";
 import sections from "@/modules/WebGL/sections.js";
@@ -22,9 +22,8 @@ export default class run {
     onComplete = () => {
         loader.complete(() => {
             controller.register(sections);
-            new WebGL();
             this.Complete();
+            new WebGL();
         });
     }
-
 }
