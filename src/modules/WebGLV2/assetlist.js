@@ -1,7 +1,5 @@
-
-
 import assets from './assetloader';
-import settings from './modules/settings'
+import settings from './settings'
 import {SRGBColorSpace} from "three";
 
 const {BASEPATH} = settings
