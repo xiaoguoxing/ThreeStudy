@@ -7,7 +7,7 @@ let progress = ref(null)
 let text = ref('');
 let bar = ref(0);
 onMounted(() => {
-  run(
+  new run(
       three.value,
       progress.value,
       (percent=0) => {

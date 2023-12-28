@@ -9,4 +9,9 @@ export default class BaseInstance extends component(Object3D) {
         this.theme = theme;
         this.fog = fog;
     }
+
+    setOrigin(origin, pos) {
+        // this.origin = origin;
+        this.position.y = pos;
+    }
 }

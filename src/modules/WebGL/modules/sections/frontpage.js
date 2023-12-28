@@ -88,7 +88,89 @@ export default class Frontpage extends BaseInstance {
 
         this.add(this.brainContainer);
 
+
+        this.introAnim = gsap.timeline({ paused: false });
+        this.introAnim.fromTo(
+            left.position,
+            {
+                x: -0.05,
+                y: -0.05,
+            },
+            {
+                x: 0.0001,
+                y: 0,
+                duration: 4,
+                ease: 'easeInOut',
+            },
+            0
+        );
+
+        this.introAnim.fromTo(
+            left.rotation,
+            {
+                z: 1,
+                x: 0,
+            },
+            {
+                z: 0,
+                x: Math.PI * 1,
+                duration: 4,
+                ease: 'easeInOut',
+            },
+            0
+        );
+
+        this.introAnim.fromTo(
+            right.rotation,
+            {
+                z: 1,
+                x: 0,
+            },
+            {
+                z: 0,
+                x: -Math.PI * 0.5,
+                duration: 3,
+                ease: 'easeInOut',
+            },
+            0
+        );
+
+        this.introAnim.fromTo(
+            right.position,
+            {
+                x: 0.0025,
+                y: -0.05,
+            },
+            { x: 0, y: 0, duration: 3, ease: 'easeInOut' },
+            0
+        );
+
+        this.outAnim = gsap.timeline({ paused: true });
+
+
+
+        this.outAnim.fromTo(this.objContainer.position, { y: 0 }, { y: 10 }, 0);
+        this.outAnim
+            .fromTo(
+                this.brainContainer.rotation,
+                {
+                    x: this.brainContainer.rotation.x,
+                },
+                { x: -0.5 },
+                0
+            )
+            .to(this.brainContainer.rotation, { x: -0.6, ease: 'easeInOut' }, 0.5);
+
+        // const folder = gui.folder({ title: 'Brain' });
+        // gui.guiColor('color', mat, folder);
+
         this.createObjects();
+        this.playIntroAnim();
+    }
+
+    playIntroAnim() {
+        this.introAnim.progress(0);
+        this.introAnim.play();
     }
 
     getRandomPosition(pos, leftSide, randZ = false) {

@@ -16,6 +16,7 @@ class Renderer extends component(WebGLRenderer) {
     }
 
     renderDom(dom){
+        this.clearDepth();
         dom.appendChild(this.domElement)
     }
 

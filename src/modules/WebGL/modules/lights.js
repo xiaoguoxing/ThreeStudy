@@ -7,7 +7,7 @@ class Lights extends component() {
     init() {
         //blue
         this.light = new DirectionalLight(0x4af2d4, 0.3);
-        this.light.position.set(-100, -10, -10);
+        this.light.position.set(-50, -10, -10);
         scene.add(this.light);
 
         //this.light.castShadow = true;
@@ -20,7 +20,7 @@ class Lights extends component() {
 
         //yellow
         this.light2 = new DirectionalLight(0xff7e00, 0.2);
-        this.light2.position.set(100, -10, -20);
+        this.light2.position.set(50, -10, -20);
         scene.add(this.light2);
 
         this.light3 = new DirectionalLight(0xffffff, 0.2);

@@ -1,26 +1,30 @@
 import renderer from './modules/renderer';
-import scene from './modules/scene';
-import camera from './modules/camera';
 import * as assetList from './assetlist.js';
 import WebGL from "./modules/index.js";
 import loader from "@/modules/WebGL/loader.js";
 import controller from "@/modules/WebGL/controller.js";
 import sections from "@/modules/WebGL/sections.js";
 
-export default function (dom,processDom, Progress = () => {},Complete=()=>{}) {
-    renderer.renderDom(dom)
-    loader.init(processDom)
-    const onProgress = (p) => {
+export default class run {
+    Progress = ()=>{}
+    Complete = ()=>{}
+    constructor(dom,processDom, Progress = () => {},Complete=()=>{}) {
+        this.Progress = Progress;
+        this.Complete = Complete;
+        renderer.renderDom(dom);
+        loader.init(processDom);
+        assetList.loadAll(renderer, this.onProgress, this.onComplete);
+    }
+    onProgress = (p) => {
         const percent = Math.round(p * 100);
-        Progress(percent)
-    };
-    const onComplete = () => {
+        this.Progress(percent);
+    }
+    onComplete = () => {
         loader.complete(() => {
-            Complete()
-            controller.register(sections)
+            controller.register(sections);
             new WebGL();
+            this.Complete();
         });
-    };
+    }
 
-    assetList.loadAll(renderer, onProgress, onComplete);
 }

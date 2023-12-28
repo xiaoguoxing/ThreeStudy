@@ -105,6 +105,7 @@ class AssetLoader {
             }
         );
     }
+
     loadOBJ(item, done) {
         Objloader.load(
             item.url,
