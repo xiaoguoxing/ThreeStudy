@@ -32,6 +32,7 @@ class Controller {
             return new Constructor(instance);
         });
         this.instances.forEach((instance, index) => {
+            console.log(instance);
             const pos = -camera.unit.height * index * M;
             const origin = index * window.innerHeight;
             instance.setOrigin(origin, pos);

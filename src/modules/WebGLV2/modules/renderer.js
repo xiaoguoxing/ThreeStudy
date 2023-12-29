@@ -15,6 +15,9 @@ export default class Renderer extends component(WebGLRenderer){
         this.shadowMap.type = PCFSoftShadowMap;
         scene.add(...linghts())
     }
+    setViewModel(object3D){
+        scene.add(object3D)
+    }
     onResize({ width, height ,ratio}) {
         this.setSize(width, height);
         this.setPixelRatio(ratio);

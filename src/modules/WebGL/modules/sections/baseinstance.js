@@ -14,4 +14,7 @@ export default class BaseInstance extends component(Object3D) {
         // this.origin = origin;
         this.position.y = pos;
     }
+
+    setabc(){
+    }
 }

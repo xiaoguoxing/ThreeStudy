@@ -1,4 +1,4 @@
-import {Scene, Camera, Color, Fog} from 'three'
+import {Scene, Color, Fog} from 'three'
 import gsap from "gsap";
 import camera from "@/modules/WebGLV2/modules/camera.js";
 class scene extends Scene{

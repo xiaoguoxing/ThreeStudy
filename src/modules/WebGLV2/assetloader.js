@@ -14,6 +14,9 @@ const imageLoader = new ImageLoader();
 const cubeTextureLoader = new CubeTextureLoader();
 const objectLoader = new ObjectLoader();
 const Objloader = new OBJLoader();
+
+import settings from "@/modules/WebGLV2/settings.js";
+const {BASEPATH} = settings
 class AssetLoader {
     constructor() {
         this.loadQueue = [];
@@ -168,12 +171,16 @@ class AssetLoader {
     }
 
     get(key) {
-        const item = this.cache[key];
+        const item = this.cache[this.getAssetsPath(key)];
         if (!item) {
             console.warn(`Could not get asset ${key}`);
             return;
         }
         return item;
+    }
+
+    getAssetsPath(name){
+        return `${BASEPATH}${name}`
     }
 
     setRenderer(renderer) {

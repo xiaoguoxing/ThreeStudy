@@ -1,7 +1,7 @@
 import {loadAll} from "@/modules/WebGLV2/assetlist.js";
 import renderer from '@/modules/WebGLV2/modules/renderer.js'
 import loader from '@/modules/WebGLV2/loader.js'
-
+import viewer from "@/modules/WebGLV2/viewer/index.js";
 
 export default class Run {
     render = null
@@ -23,6 +23,7 @@ export default class Run {
     #onComplete = ()=> {
         loader.complete(() => {
             this.options.Complete();
+            this.render.setViewModel(viewer())
         });
     }
 }
