@@ -1,8 +1,9 @@
 import {WebGLRenderer, PCFSoftShadowMap} from 'three'
-import settings from "@/modules/WebGLV2/settings.js";
 import scene from "@/modules/WebGLV2/modules/scene.js";
 import camera from "@/modules/WebGLV2/modules/camera.js";
+import linghts from "@/modules/WebGLV2/modules/linghts.js";
 import {component} from "@/modules/WebGLV2/modules/dispatcher.js";
+import settings from "@/modules/WebGLV2/settings.js";
 import './raf.js'
 import './viewport.js'
 export default class Renderer extends component(WebGLRenderer){
@@ -12,6 +13,7 @@ export default class Renderer extends component(WebGLRenderer){
         this.setPixelRatio(settings.DPR);
         this.shadowMap.enabled = true;
         this.shadowMap.type = PCFSoftShadowMap;
+        scene.add(...linghts())
     }
     onResize({ width, height ,ratio}) {
         this.setSize(width, height);

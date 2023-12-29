@@ -21,7 +21,6 @@ class Dispatcher {
 
     register(instance) {
         this.instances.push(instance);
-
         for (let k in this.fireAtStart) {
             this.fireMethod(instance, k);
         }
@@ -55,7 +54,7 @@ class Dispatcher {
         }
 
         if (log) {
-            console.log(`${name} – ${data}`);
+            console.log(`${name} – ${JSON.stringify(data)}`);
         }
 
         if (name in this.listeners) {

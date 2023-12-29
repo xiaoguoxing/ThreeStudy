@@ -7,7 +7,6 @@ class Viewport {
         this.width = this.calculateWidth();
         this.height = this.calculateHeight();
         this.ratio = this.width / this.height;
-
         this.onResize();
         window.addEventListener('resize', debounce(this.onResize, 100));
     }
@@ -28,7 +27,7 @@ class Viewport {
         updateScreenSize();
 
         dispatcher.trigger(
-            { name: 'resize', fireAtStart: true },
+            { name: 'resize', fireAtStart: true},
             {
                 width: this.width,
                 height: this.height,
