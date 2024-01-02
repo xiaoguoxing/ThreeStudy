@@ -10,7 +10,6 @@ const arr = [
     }
 ]
 export default function (){
-
     let newView = new Group()
     newView.name = 'controller'
     arr.forEach(i=>{

@@ -4,6 +4,7 @@ import camera from "@/modules/WebGLV2/modules/camera.js";
 import linghts from "@/modules/WebGLV2/modules/linghts.js";
 import {component} from "@/modules/WebGLV2/modules/dispatcher.js";
 import settings from "@/modules/WebGLV2/settings.js";
+import pointer from '@/modules/WebGLV2/modules/pointer'
 import './raf.js'
 import './viewport.js'
 export default class Renderer extends component(WebGLRenderer){
@@ -23,6 +24,7 @@ export default class Renderer extends component(WebGLRenderer){
         this.setPixelRatio(ratio);
     }
     onRaf() {
+        pointer.update();
         this.render(scene, camera);
     }
 }

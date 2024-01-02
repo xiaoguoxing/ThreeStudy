@@ -8,5 +8,6 @@ export default class baseInstance extends component(Object3D){
         this.el = data.el;
         this.theme = data.theme;
         this.fog = data.fog;
+        console.log(this);
     }
 }

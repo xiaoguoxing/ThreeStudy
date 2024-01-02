@@ -4,6 +4,7 @@ import BaseInstance from './baseinstance.js';
 import assets from '@/modules/WebGLV2/assetloader';
 import { randBetween } from '@/utils';
 import camera from '@/modules/WebGLV2/modules/camera';
+import pointer from '@/modules/WebGLV2/modules/pointer'
 const MODELS = [
     {
         url: `bong.glb`,
@@ -30,7 +31,6 @@ const MODELS = [
         scale: 0.3,
     },
 ];
-
 export default class Frontpage extends BaseInstance {
     constructor(opts) {
         super(opts);
@@ -228,11 +228,11 @@ export default class Frontpage extends BaseInstance {
 
     onRaf() {
         // if (!this.active) return;
-        // this.brainContainer.rotation.x = -pointer.normEased.y * 0.3;
-        // this.brainContainer.rotation.y = -pointer.normEased.x * 0.3;
-        //
-        // this.objContainer.rotation.y = -pointer.normEased.x * 0.35;
-        // this.objContainer.position.x = -pointer.normEased.x * 3;
+        this.brainContainer.rotation.x = -pointer.normEased.y * 0.3;
+        this.brainContainer.rotation.y = -pointer.normEased.x * 0.3;
+
+        this.objContainer.rotation.y = -pointer.normEased.x * 0.35;
+        this.objContainer.position.x = -pointer.normEased.x * 3;
 
         for (let obj of this.objects) {
             const container = obj.container;
