@@ -16,7 +16,6 @@ export default function (){
     arr.forEach(i=>{
         let {Constructor,...data} = i
         let newC = new Constructor(data)
-        newC.setobj(12)
         newView.add(newC)
     })
     return newView

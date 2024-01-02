@@ -1,6 +1,6 @@
 import {MeshLambertMaterial, MeshPhongMaterial, Color, Group} from 'three';
 import gsap from 'gsap';
-import BaseInstance from '@/modules/WebGLV2/viewer/baseinstance.js';
+import BaseInstance from './baseinstance.js';
 import assets from '@/modules/WebGLV2/assetloader';
 import { randBetween } from '@/utils';
 import camera from '@/modules/WebGLV2/modules/camera';
