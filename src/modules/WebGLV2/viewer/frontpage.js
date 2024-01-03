@@ -5,6 +5,7 @@ import assets from '@/modules/WebGLV2/assetloader';
 import { randBetween } from '@/utils';
 import camera from '@/modules/WebGLV2/modules/camera';
 import pointer from '@/modules/WebGLV2/modules/pointer'
+import rayCast from "@/modules/WebGLV2/modules/rayCast.js";
 const MODELS = [
     {
         url: `bong.glb`,
@@ -32,6 +33,7 @@ const MODELS = [
     },
 ];
 export default class Frontpage extends BaseInstance {
+
     constructor(opts) {
         super(opts);
     }
@@ -218,6 +220,8 @@ export default class Frontpage extends BaseInstance {
 
             const clone = mesh.clone();
             const cont2 = new Group();
+            cont2.name = 'scene2'
+            clone.name = clone.name+'_clone'
             cont2.add(clone);
             const obj2 = {
                 container: cont2,
@@ -230,6 +234,26 @@ export default class Frontpage extends BaseInstance {
             this.objects.push(obj2);
             this.objContainer.add(cont2);
         }
+
+    }
+
+    onPointerMove(){
+        rayCast.setRayCast(this.brainContainer.children,(arr)=>{
+            if(arr){
+                let mesh = arr.object
+                this.brainContainer.traverse(function (child) {
+                    if (child.isMesh) {
+                       child.material.wireframe = mesh.name === child.name;
+                    }
+                })
+            }else {
+                this.brainContainer.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.material.wireframe = false;
+                    }
+                })
+            }
+        })
     }
 
     onRaf() {

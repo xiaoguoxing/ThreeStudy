@@ -1,6 +1,7 @@
 import touches from 'touches';
 import { Vector2, Vector3 } from 'three';
 import { viewport } from './viewport';
+import dispatcher from "@/modules/WebGLV2/modules/dispatcher.js";
 const defaults = {
     pos: [viewport.width * 0.5, viewport.height * 0.5],
     inertia: 0.05,
@@ -39,6 +40,14 @@ class Pointer {
         this.isDown = true;
         this.pos.set(pos[0], pos[1]);
         this.norm.set(norm.x, norm.y);
+        dispatcher.trigger(
+            {
+                name: 'pointerMove',
+            },
+            {
+                pointer: this,
+            }
+        );
     }
     onEnd = () => {
         this.isDown = false;
