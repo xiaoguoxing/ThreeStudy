@@ -42,6 +42,7 @@ class camera extends component(PerspectiveCamera) {
         this.aspect = ratio;
         this.updateProjectionMatrix();
     }
+
     onRaf(){
         this.controls?.update();
     }
