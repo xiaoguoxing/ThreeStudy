@@ -21,7 +21,7 @@ const a = new run(three.value,{
 
 <template>
   <canvas id="three" ref="three"></canvas>
-  <div class="container"></div>
+<!--  <div class="container"></div>-->
   <div  class="progress" ref="progress">
     <div class="text">{{text}}</div>
     <div class="progress-content">

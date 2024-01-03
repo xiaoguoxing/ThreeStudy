@@ -10,7 +10,7 @@ export default function (){
     let light3 = new DirectionalLight(0xffffff, 1.2);
     light3.position.set(50, 50, 20);
 
-    let ambient = new AmbientLight(0xffffff, 1.7);
+    let ambient = new AmbientLight(0xffffff, 1.3);
     return [
         light,
         light2,

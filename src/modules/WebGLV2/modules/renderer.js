@@ -15,6 +15,9 @@ export default class Renderer extends component(WebGLRenderer){
         this.shadowMap.enabled = true;
         this.shadowMap.type = PCFSoftShadowMap;
         scene.add(...linghts())
+        if (settings.ENABLE_CONTROLS) {
+            camera.initOrbitControls(this.domElement);
+        }
     }
     setViewModel(object3D){
         scene.add(object3D)
