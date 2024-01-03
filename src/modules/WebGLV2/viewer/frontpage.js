@@ -54,6 +54,10 @@ export default class Frontpage extends BaseInstance {
             //envMap: this.envMap,
             //reflectivity: 0,
             color: new Color(0xf7f7f7),
+            // emissive: new Color(0xf7f7f7),
+            // emissiveIntensity:.1,
+            specular:new Color(0xffffff),
+            shininess:80,
             map: assets.get((`brain-left-texture2.jpg`)),
         });
 
@@ -188,9 +192,11 @@ export default class Frontpage extends BaseInstance {
 
         this.add(this.objContainer);
         const mat = new MeshPhongMaterial({
-            color: 0xf7f7f7,
+            // color: 0xf7f7f7,
+            emissiveIntensity:.1,
+            emissive: new Color(0xf7f7f7),
             //envMap: this.envMap,
-            //reflectivity: 0.05,
+            reflectivity: 0.05,
         });
 
         for (let model of MODELS) {
