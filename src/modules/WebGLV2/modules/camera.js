@@ -2,10 +2,15 @@ import {PerspectiveCamera, Vector3} from 'three'
 import settings from "@/modules/WebGLV2/settings.js";
 import {component} from "@/modules/WebGLV2/modules/dispatcher.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import gui from '@/modules/WebGLV2/modules/gui.js'
 const { CAMERA_FOV, CAMERA_NEAR, CAMERA_FAR } = settings;
 class camera extends component(PerspectiveCamera) {
     constructor() {
         super(CAMERA_FOV, 0, CAMERA_NEAR, CAMERA_FAR);
+        const a = gui.folder({title:'相机'})
+        gui.add(this,'fov',{min:0,max:150,label:'fov'},a).on('change', () => {
+            this.updateProjectionMatrix();
+        });
     }
 
     init() {

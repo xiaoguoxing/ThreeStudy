@@ -19,6 +19,7 @@ class GUI{
             }
         });
     }
+
     folder(options = {}) {
         return this.pane.addFolder(options);
     }

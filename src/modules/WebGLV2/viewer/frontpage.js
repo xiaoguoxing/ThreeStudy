@@ -58,7 +58,7 @@ export default class Frontpage extends BaseInstance {
             color: new Color(0xf7f7f7),
             // emissive: new Color(0xf7f7f7),
             // emissiveIntensity:.1,
-            specular:new Color(0xffffff),
+            specular:new Color(0x333333),
             shininess:80,
             map: assets.get((`brain-left-texture2.jpg`)),
         });

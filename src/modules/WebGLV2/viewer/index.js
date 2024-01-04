@@ -5,7 +5,7 @@ const arr = [
         Constructor: frontpage,
         name: 'Frontpage',
         el: ['#introText'],
-        theme: 'light',
+        // theme: 'light',
         fog: { near: 15, far: 36 },
     }
 ]
