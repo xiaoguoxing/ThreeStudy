@@ -5,6 +5,7 @@ import viewer from "@/modules/WebGLV2/viewer/index.js";
 
 export default class Run {
     render = null
+    view = null
     options = {
         progressDom:null,
         Progress : ()=>{},
@@ -23,7 +24,12 @@ export default class Run {
     #onComplete = ()=> {
         loader.complete(() => {
             this.options.Complete();
-            this.render.setViewModel(viewer())
+            this.view = new viewer()
+            this.render.setViewModel(this.view.newView)
         });
+    }
+    destroy(){
+        this.render.destroyAll()
+        this.view.destroyView()
     }
 }

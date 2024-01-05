@@ -35,6 +35,10 @@ class Viewport {
             }
         );
     };
+
+    dispose(){
+        window.removeEventListener('resize', debounce(this.onResize, 100));
+    }
 }
 
 export const viewport = new Viewport();

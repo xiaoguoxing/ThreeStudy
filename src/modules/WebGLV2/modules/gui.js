@@ -18,6 +18,7 @@ class GUI{
                 }
             }
         });
+
     }
 
     folder(options = {}) {
@@ -35,6 +36,10 @@ class GUI{
         folder.addInput(this.colors, param).on('change', (val) => {
             obj[param].setStyle(this.colors[param]);
         });
+    }
+
+    dispose(){
+        this.pane.dispose()
     }
 }
 

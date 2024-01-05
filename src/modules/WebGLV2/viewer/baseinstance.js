@@ -9,7 +9,4 @@ export default class baseInstance extends component(Object3D){
         this.theme = data.theme;
         this.fog = data.fog;
     }
-    init(){
-        console.log('123');
-    }
 }
