@@ -1,4 +1,4 @@
-import {MeshLambertMaterial, MeshPhongMaterial, Color, Group} from 'three';
+import {MeshLambertMaterial, MeshPhongMaterial, Color, Group, ShaderMaterial,RawShaderMaterial} from 'three';
 import gsap from 'gsap';
 import BaseInstance from './baseinstance.js';
 import assets from '@/modules/WebGLV2/assetloader';
@@ -6,6 +6,8 @@ import { randBetween } from '@/utils';
 import camera from '@/modules/WebGLV2/modules/camera';
 import pointer from '@/modules/WebGLV2/modules/pointer'
 import rayCast from "@/modules/WebGLV2/modules/rayCast.js";
+import fragmentShader from './shaders/fragmentShader.glsl'
+import vertexShader from './shaders/vertexShader.glsl'
 const MODELS = [
     {
         url: `bong.glb`,
@@ -193,13 +195,19 @@ export default class Frontpage extends BaseInstance {
         this.objects = [];
 
         this.add(this.objContainer);
-        const mat = new MeshPhongMaterial({
+        const mat2 = new MeshPhongMaterial({
             // color: 0xf7f7f7,
             emissiveIntensity:.1,
             emissive: new Color(0xf7f7f7),
             //envMap: this.envMap,
             reflectivity: 0.05,
         });
+
+
+        const mat = new RawShaderMaterial({
+            vertexShader:vertexShader,
+            fragmentShader:fragmentShader
+        })
 
         for (let model of MODELS) {
             const { url, scale } = model;
