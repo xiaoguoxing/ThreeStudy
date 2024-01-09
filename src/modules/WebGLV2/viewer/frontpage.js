@@ -195,7 +195,7 @@ export default class Frontpage extends BaseInstance {
         this.objects = [];
 
         this.add(this.objContainer);
-        const mat2 = new MeshPhongMaterial({
+        const mat = new MeshPhongMaterial({
             // color: 0xf7f7f7,
             emissiveIntensity:.1,
             emissive: new Color(0xf7f7f7),
@@ -204,7 +204,7 @@ export default class Frontpage extends BaseInstance {
         });
 
 
-        const mat = new RawShaderMaterial({
+        const mat2 = new RawShaderMaterial({
             vertexShader:vertexShader,
             fragmentShader:fragmentShader
         })
